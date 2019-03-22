@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="192dp"
+    android:background="@color/colorPrimary"
+    android:padding="16dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:orientation="vertical"
+    android:gravity="bottom">
+
+    <TextView
+        android:id="@+id/headerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/username"
+        android:textSize="20sp"
+        android:layout_marginTop="25dp"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/headerEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="@string/email"
+        android:textSize="17sp"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/headerMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/menu"
+        android:textSize="25sp"
+        android:layout_marginTop="25dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/headerEnterAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/etya"
+        android:textSize="23sp"
+        android:textColor="@color/white"
+        />
+
+    <TextView
+        android:id="@+id/headerLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/ltya"
+        android:textSize="17sp"
+        android:textColor="@color/white"
+        />
+</LinearLayout>

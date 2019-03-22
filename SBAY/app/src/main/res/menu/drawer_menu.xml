@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group>
+        <item
+            android:id="@+id/nav_softwares"
+            android:icon="@drawable/ic_softwares"
+            android:title="All Softwares">
+        </item>
+    </group>
+
+    <group
+        android:id="@+id/menuSeller"
+        android:checkableBehavior="single"
+        android:visible="false">
+
+        <item
+            android:id="@+id/nav_addSoftware"
+            android:icon="@drawable/add_product"
+            android:title="Add Software"
+            >
+        </item>
+
+        <item
+            android:id="@+id/nav_mySoftware"
+            android:icon="@drawable/my_product"
+            android:title="My Software">
+        </item>
+
+        <item
+            android:id="@+id/nav_sellchat"
+            android:icon="@drawable/chat"
+            android:title="Chat">
+        </item>
+
+        <item
+            android:id="@+id/nav_sellnotification"
+            android:icon="@drawable/notification"
+            android:title="Notification">
+        </item>
+
+        <item
+            android:id="@+id/nav_selllogout"
+            android:icon="@drawable/logout"
+            android:title="Logout">
+        </item>
+
+    </group>
+
+    <group
+        android:id="@+id/menuCustomer"
+        android:checkableBehavior="single"
+        android:visible="false">
+
+        <item
+            android:id="@+id/nav_myPurchase"
+            android:icon="@drawable/my_product"
+            android:title="My Purchase">
+        </item>
+
+        <item
+            android:id="@+id/nav_custchat"
+            android:icon="@drawable/chat"
+            android:title="Chat">
+        </item>
+
+        <item
+            android:id="@+id/nav_custnotification"
+            android:icon="@drawable/notification"
+            android:title="Notification">
+        </item>
+
+        <item
+            android:id="@+id/nav_custlogout"
+            android:icon="@drawable/logout"
+            android:title="Logout">
+        </item>
+
+    </group>
+
+</menu>
