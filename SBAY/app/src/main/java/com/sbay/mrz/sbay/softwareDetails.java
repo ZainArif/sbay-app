@@ -45,9 +45,15 @@ public class softwareDetails {
     @SerializedName("category")
     private String Category;
 
+    @SerializedName("delStatus")
+    private String delstatus;
+
+    @SerializedName("updateStatus")
+    private String updatestatus;
+
     private String screenshot;
 
-
+    // This constructor is use for sql lite database
     public softwareDetails(@NonNull String productID, String Name, String Description, String Category, String Cost, String demoVideoURl, String screenshot ) {
         this.productID = productID;
         this.Name = Name;
@@ -58,6 +64,7 @@ public class softwareDetails {
         this.screenshot = screenshot;
     }
 
+    // This constructor is use for calling all softwares & software categories
     @Ignore
     public softwareDetails(@NonNull String productID, String Name, String Description, String Category, String Cost, String demoVideoURl, String[] screenShot) {
         this.productID = productID;
@@ -69,8 +76,23 @@ public class softwareDetails {
         this.screenShot = screenShot;
     }
 
+    // This constructor is use for post product
     @Ignore
     public softwareDetails(String sellerID, String Name, String Description, String exeURl, String demoVideoURl, String hostURL, String Cost, String Category, String[] screenShot) {
+        this.sellerID = sellerID;
+        this.Name = Name;
+        this.Description = Description;
+        this.exeURl = exeURl;
+        this.demoVideoURl = demoVideoURl;
+        this.hostURL = hostURL;
+        this.Cost = Cost;
+        this.Category = Category;
+        this.screenShot = screenShot;
+    }
+
+    @Ignore
+    public softwareDetails(@NonNull String productID, String sellerID, String Name, String Description, String exeURl, String demoVideoURl, String hostURL, String Cost, String Category, String[] screenShot) {
+        this.productID = productID;
         this.sellerID = sellerID;
         this.Name = Name;
         this.Description = Description;
@@ -169,5 +191,21 @@ public class softwareDetails {
 
     public void setScreenshot(String screenshot) {
         this.screenshot = screenshot;
+    }
+
+    public String getDelstatus() {
+        return delstatus;
+    }
+
+    public void setDelstatus(String delstatus) {
+        this.delstatus = delstatus;
+    }
+
+    public String getUpdatestatus() {
+        return updatestatus;
+    }
+
+    public void setUpdatestatus(String updatestatus) {
+        this.updatestatus = updatestatus;
     }
 }

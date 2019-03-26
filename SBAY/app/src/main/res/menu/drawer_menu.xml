@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group>
+    <group
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_softwares"
             android:icon="@drawable/ic_softwares"
-            android:title="All Softwares">
+            android:title="@string/allsoftwares">
         </item>
     </group>
 
@@ -19,32 +20,32 @@
         <item
             android:id="@+id/nav_addSoftware"
             android:icon="@drawable/add_product"
-            android:title="Add Software"
+            android:title="@string/addsoftware"
             >
         </item>
 
         <item
             android:id="@+id/nav_mySoftware"
             android:icon="@drawable/my_product"
-            android:title="My Software">
+            android:title="@string/mysoftware">
         </item>
 
         <item
             android:id="@+id/nav_sellchat"
             android:icon="@drawable/chat"
-            android:title="Chat">
+            android:title="@string/chat">
         </item>
 
         <item
             android:id="@+id/nav_sellnotification"
             android:icon="@drawable/notification"
-            android:title="Notification">
+            android:title="@string/notification">
         </item>
 
         <item
             android:id="@+id/nav_selllogout"
             android:icon="@drawable/logout"
-            android:title="Logout">
+            android:title="@string/logout">
         </item>
 
     </group>
@@ -57,25 +58,25 @@
         <item
             android:id="@+id/nav_myPurchase"
             android:icon="@drawable/my_product"
-            android:title="My Purchase">
+            android:title="@string/mypurchase">
         </item>
 
         <item
             android:id="@+id/nav_custchat"
             android:icon="@drawable/chat"
-            android:title="Chat">
+            android:title="@string/chat">
         </item>
 
         <item
             android:id="@+id/nav_custnotification"
             android:icon="@drawable/notification"
-            android:title="Notification">
+            android:title="@string/logout">
         </item>
 
         <item
             android:id="@+id/nav_custlogout"
             android:icon="@drawable/logout"
-            android:title="Logout">
+            android:title="@string/logout">
         </item>
 
     </group>

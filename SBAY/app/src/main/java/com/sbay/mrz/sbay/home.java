@@ -10,11 +10,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.cloudinary.android.MediaManager;
 
 public class home extends AppCompatActivity {
 
@@ -37,13 +41,24 @@ public class home extends AppCompatActivity {
     private String menuType;
     private String seller_cust_id;
 
-    private addProduct addProduct;
     private Bundle bundle;
+
+    private addProduct addProduct;
+    private myProduct myProduct;
+
+    private static final String TAG = "Media Manager Exception";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        try{
+            MediaManager.init(this);
+        }
+        catch (IllegalStateException e){
+            Log.d(TAG,e.getMessage());
+        }
 
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -112,6 +127,17 @@ public class home extends AppCompatActivity {
                         addProduct.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_container, addProduct)
+                                .commit();
+                        return true;
+                    case R.id.nav_mySoftware:
+                        menuItem.setChecked((true));
+                        drawerLayout.closeDrawers();
+                        bundle = new Bundle();
+                        bundle.putString("seller_cust_id",seller_cust_id);
+                        myProduct = new myProduct();
+                        myProduct.setArguments(bundle);
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, myProduct)
                                 .commit();
                         return true;
                 }

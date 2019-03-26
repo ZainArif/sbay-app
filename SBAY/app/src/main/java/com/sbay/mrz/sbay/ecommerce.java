@@ -79,6 +79,7 @@ public class ecommerce extends Fragment {
         softwareDetalisListCall.enqueue(new Callback<List<softwareDetails>>() {
             @Override
             public void onResponse(Call<List<softwareDetails>> call, Response<List<softwareDetails>> response) {
+                softwareDetailsList.clear();
                 for (int index=0;index<response.body().size();index++)
                 {
                     productId = response.body().get(index).getProductID();

@@ -57,7 +57,8 @@
                     android:padding="4dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="@color/colorPrimaryDark"
-                    android:inputType="textPersonName"/>
+                    android:inputType="textPersonName"
+                    android:background="@drawable/transparent"/>
             </LinearLayout>
 
             <LinearLayout
@@ -81,7 +82,8 @@
                     android:padding="4dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="@color/colorPrimaryDark"
-                    android:inputType="textEmailAddress"/>
+                    android:inputType="textEmailAddress"
+                    android:background="@drawable/transparent"/>
             </LinearLayout>
 
             <LinearLayout
@@ -105,7 +107,8 @@
                     android:padding="4dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="@color/colorPrimaryDark"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword"
+                    android:background="@drawable/transparent"/>
             </LinearLayout>
 
             <LinearLayout
@@ -129,7 +132,8 @@
                     android:padding="4dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="@color/colorPrimaryDark"
-                    android:inputType="phone"/>
+                    android:inputType="phone"
+                    android:background="@drawable/transparent"/>
             </LinearLayout>
 
             <LinearLayout
@@ -153,7 +157,8 @@
                     android:padding="4dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="@color/colorPrimaryDark"
-                    android:inputType="textPostalAddress"/>
+                    android:inputType="textPostalAddress"
+                    android:background="@drawable/transparent"/>
             </LinearLayout>
 
         </LinearLayout>

@@ -8,13 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-public class customRecyclerAdapter1 extends RecyclerView.Adapter<myProductViewHolder> {
+public class customRecyclerAdapter1 extends RecyclerView.Adapter<productsViewHolder> {
 
     private ArrayList<softwareDetails> softwareDetailsList;
     private Context context;
@@ -31,24 +30,24 @@ public class customRecyclerAdapter1 extends RecyclerView.Adapter<myProductViewHo
 
     @NonNull
     @Override
-    public myProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public productsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View myProductView = LayoutInflater.from(parent.getContext()).inflate(R.layout.productcard1,parent,false);
-        myProductViewHolder myProductViewHolder = new myProductViewHolder(myProductView,context,softwareDetailsList);
-        return myProductViewHolder;
+        productsViewHolder productsViewHolder = new productsViewHolder(myProductView,context,softwareDetailsList);
+        return productsViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull myProductViewHolder myProductViewHolder, final int position) {
+    public void onBindViewHolder(@NonNull productsViewHolder productsViewHolder, final int position) {
         final softwareDetails softwareDetails = softwareDetailsList.get(position);
-        //myProductViewHolder.tv_productCat.setText(softwareDetails.getCategory());
-        myProductViewHolder.tv_productName.setText(softwareDetails.getName());
-        // myProductViewHolder.tv_productDesc.setText(softwareDetails.getpDescription());
-        myProductViewHolder.tv_productCost.setText(context.getResources().getString(R.string.rs) + softwareDetails.getCost());
+        //productsViewHolder.tv_productCat.setText(softwareDetails.getCategory());
+        productsViewHolder.tv_productName.setText(softwareDetails.getName());
+        // productsViewHolder.tv_productDesc.setText(softwareDetails.getpDescription());
+        productsViewHolder.tv_productCost.setText(context.getResources().getString(R.string.rs) + softwareDetails.getCost());
 
         final String[] pScreenshots = softwareDetails.getScreenShot();
-        Glide.with(context).load(pScreenshots[0]).into(myProductViewHolder.iv_productImage);
+        Glide.with(context).load(pScreenshots[0]).into(productsViewHolder.iv_productImage);
 
-        myProductViewHolder.btn_addToCart.setOnClickListener(new View.OnClickListener() {
+        productsViewHolder.btn_addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 softwareDetails details = productsDatabase.productsData().getProductById(softwareDetails.getProductID());

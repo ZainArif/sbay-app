@@ -86,7 +86,7 @@ public class productInfo extends Fragment {
         tv_pCat.setText(pCategory);
         tv_pDesc.setText(pDescription);
 
-        if (pDemoVideoURl!=null)
+        if (pDemoVideoURl!=null && pDemoVideoURl.isEmpty())
             tv_pDemoUrl.setText(getResources().getString(R.string.notavailable));
         else
             tv_pDemoUrl.setText(pDemoVideoURl);

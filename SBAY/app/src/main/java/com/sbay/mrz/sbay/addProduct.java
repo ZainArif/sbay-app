@@ -27,6 +27,7 @@ import com.cloudinary.android.callback.UploadCallback;
 import com.cloudinary.android.preprocess.DimensionsValidator;
 import com.cloudinary.android.preprocess.ImagePreprocessChain;
 import com.cloudinary.android.preprocess.Limit;
+import com.cloudinary.utils.ObjectUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -72,7 +73,7 @@ public class addProduct extends Fragment {
     private String[] pScreenshot;
 
     private Boolean valid;
-    Boolean isImageUpload;
+    private Boolean isImageUpload;
 
     private ApiInterface apiInterface;
 
@@ -101,7 +102,6 @@ public class addProduct extends Fragment {
         if (bundle != null)
             sellerId = bundle.getString("seller_cust_id");
 
-        MediaManager.init(getContext());
         pScreenshot = new String[1];
         isImageUpload = false;
 
@@ -217,14 +217,13 @@ public class addProduct extends Fragment {
 
     private byte[] imageToByte() {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, byteArrayOutputStream);
         byte[] imgByte = byteArrayOutputStream.toByteArray();
         //return Base64.encodeToString(imgByte,Base64.DEFAULT);
         return imgByte;
     }
 
     private void uploadImage() {
-
         MediaManager.get().upload(imageToByte()).callback(new UploadCallback() {
             @Override
             public void onStart(String requestId) {

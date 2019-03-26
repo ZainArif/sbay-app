@@ -78,7 +78,7 @@
         <item>Ecommerce</item>
         <item>IOT</item>
     </string-array>
-    
+
     <string name="exeurl">"Exe Url"</string>
     <string name="hosturl">"Host Url"</string>
     <string name="demovideourl">"Demo Url"</string>
@@ -87,5 +87,17 @@
     <string name="psaved">"Product Saved"</string>
     <string name="selectImage">"Please Upload Image"</string>
     <string name="imgError">"Image Could Not Upload\nPlease Try Again"</string>
+
+    <string name="allsoftwares">"All Softwares</string>
+    <string name="addsoftware">"Add Software</string>
+    <string name="mysoftware">"My Softwares"</string>
+    <string name="chat">"Chat</string>
+    <string name="notification">"Notification"</string>
+    <string name="logout">"Logout"</string>
+    <string name="mypurchase">"My Purchase"</string>
+    <string name="edit">"Edit</string>
+
+    <string name="updateyourproduct">"Update Your Product"</string>
+    <string name="pupdated">"Product Updated"</string>
 
 </resources>
