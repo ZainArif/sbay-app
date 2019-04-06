@@ -43,6 +43,7 @@ public class myProduct extends Fragment {
     private String pHostUrl;
     private String pCat;
     private String[] pScreenshot;
+    private String[] pScreenshotPublicId;
 
     public myProduct() {
         // Required empty public constructor
@@ -98,7 +99,8 @@ public class myProduct extends Fragment {
                     pCost = response.body().get(index).getCost();
                     pCat = response.body().get(index).getCategory();
                     pScreenshot = response.body().get(index).getScreenShot();
-                    softwareDetailsList.add(new softwareDetails(pId,sellerId,pNmae,pDesc,pExeUrl,pDemoUrl,pHostUrl,pCost,pCat,pScreenshot));
+                    pScreenshotPublicId =  response.body().get(index).getScreenshotPublicID();
+                    softwareDetailsList.add(new softwareDetails(pId,sellerId,pNmae,pDesc,pExeUrl,pDemoUrl,pHostUrl,pCost,pCat,pScreenshot,pScreenshotPublicId));
                     myProductRecycleradapter.notifyDataSetChanged();
                 }
             }

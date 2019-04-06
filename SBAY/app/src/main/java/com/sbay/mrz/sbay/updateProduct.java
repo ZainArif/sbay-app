@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.callback.ErrorInfo;
 import com.cloudinary.android.callback.UploadCallback;
+import com.cloudinary.utils.ObjectUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -72,6 +74,7 @@ public class updateProduct extends Fragment {
     private String pHostUrl;
     private String pCat;
     private String[] pScreenshot;
+    private String[] pScreenshotPublicId;
 
     private Boolean isImageUpload;
     private Boolean isImageSelect;
@@ -82,9 +85,10 @@ public class updateProduct extends Fragment {
 
     private Uri path;
     private Bitmap bitmap;
-    private String screenShotUrl;
 
     private String[] spinnerList;
+
+    private static final String TAG = "Media Manager Exception";
 
     public updateProduct() {
         // Required empty public constructor
@@ -137,7 +141,7 @@ public class updateProduct extends Fragment {
             pDemoUrl = bundle.getString("pDemoUrl");
             pHostUrl = bundle.getString("pHostUrl");
             pScreenshot = bundle.getStringArray("pScreenshots");
-
+            pScreenshotPublicId = bundle.getStringArray("pScreenshotsPublicId");
             et_productName.setText(pName);
             et_productDesc.setText(pDesc);
             et_productCost.setText(pCost);
@@ -230,6 +234,8 @@ public class updateProduct extends Fragment {
             @Override
             public void onClick(View v) {
                 extraFunctions.closeKeyboard(getActivity(), getContext());
+                extraFunctions.showProgressDialog(getContext(), "Updating Product");
+
                 pName = et_productName.getText().toString();
                 pDesc = et_productDesc.getText().toString();
                 pCost = et_productCost.getText().toString();
@@ -237,8 +243,6 @@ public class updateProduct extends Fragment {
                 pDemoUrl = et_productDemoUrl.getText().toString();
                 pHostUrl = et_productHostUrl.getText().toString();
                 pCat = sp_productCat.getSelectedItem().toString();
-
-                extraFunctions.showProgressDialog(getContext(), "Updating Product");
 
                 if (isImageSelect){
                     if (!isImageUpload) {
@@ -257,7 +261,7 @@ public class updateProduct extends Fragment {
 
     private void update_product() {
 
-        softwareDetails = new softwareDetails(sellerId, pName, pDesc, pExeUrl, pDemoUrl, pHostUrl, pCost, pCat, pScreenshot);
+        softwareDetails = new softwareDetails(sellerId, pName, pDesc, pExeUrl, pDemoUrl, pHostUrl, pCost, pCat, pScreenshot,pScreenshotPublicId);
 
         final Call<softwareDetails> updateProductSoftwareCall = apiInterface.updateProduct(pId, softwareDetails);
         updateProductSoftwareCall.enqueue(new Callback<com.sbay.mrz.sbay.softwareDetails>() {
@@ -265,6 +269,7 @@ public class updateProduct extends Fragment {
             public void onResponse(Call<com.sbay.mrz.sbay.softwareDetails> call, Response<com.sbay.mrz.sbay.softwareDetails> response) {
                 String updateStatus = response.body().getUpdatestatus();
                 if (updateStatus.equals("updated")) {
+
                     extraFunctions.hideProgressDialog();
                     extraFunctions.text.setText(getResources().getString(R.string.pupdated));
                     extraFunctions.toast.show();
@@ -329,8 +334,10 @@ public class updateProduct extends Fragment {
 
             @Override
             public void onSuccess(String requestId, Map resultData) {
-                screenShotUrl = resultData.get("secure_url").toString();
-                pScreenshot[0] = screenShotUrl;
+                delAsyncTask delAsyncTask = new delAsyncTask(getContext());
+                delAsyncTask.execute(pScreenshotPublicId[0]);
+                pScreenshot[0] = resultData.get("secure_url").toString();
+                pScreenshotPublicId[0] = resultData.get("public_id").toString();
                 isImageUpload = true;
                 update_product();
             }

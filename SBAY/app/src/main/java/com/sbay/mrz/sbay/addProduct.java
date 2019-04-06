@@ -71,6 +71,7 @@ public class addProduct extends Fragment {
     private String pHostUrl;
     private String pCat;
     private String[] pScreenshot;
+    private String[] pScreenshotPublicId;
 
     private Boolean valid;
     private Boolean isImageUpload;
@@ -81,7 +82,6 @@ public class addProduct extends Fragment {
 
     private Uri path;
     private Bitmap bitmap;
-    private String screenShotUrl;
 
     public addProduct() {
         // Required empty public constructor
@@ -103,6 +103,7 @@ public class addProduct extends Fragment {
             sellerId = bundle.getString("seller_cust_id");
 
         pScreenshot = new String[1];
+        pScreenshotPublicId = new String[1];
         isImageUpload = false;
 
         et_productName = (EditText) rootView.findViewById(R.id.et_productName);
@@ -182,7 +183,7 @@ public class addProduct extends Fragment {
 
     private void postProduct() {
 
-        softwareDetails = new softwareDetails(sellerId, pNmae, pDesc, pExeUrl, pDemoUrl, pHostUrl, pCost, pCat, pScreenshot);
+        softwareDetails = new softwareDetails(sellerId, pNmae, pDesc, pExeUrl, pDemoUrl, pHostUrl, pCost, pCat, pScreenshot, pScreenshotPublicId);
 
         Call<softwareDetails> addSoftwareCall = apiInterface.postProduct(softwareDetails);
         addSoftwareCall.enqueue(new Callback<com.sbay.mrz.sbay.softwareDetails>() {
@@ -237,8 +238,8 @@ public class addProduct extends Fragment {
 
             @Override
             public void onSuccess(String requestId, Map resultData) {
-                screenShotUrl = resultData.get("secure_url").toString();
-                pScreenshot[0] = screenShotUrl;
+                pScreenshot[0] = resultData.get("secure_url").toString();
+                pScreenshotPublicId[0] = resultData.get("public_id").toString();
                 isImageUpload = true;
                 postProduct();
             }

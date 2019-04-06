@@ -45,6 +45,10 @@ public class softwareDetails {
     @SerializedName("category")
     private String Category;
 
+    @Ignore
+    @SerializedName("screenShotPublicId")
+    private String[] screenshotPublicID;
+
     @SerializedName("delStatus")
     private String delstatus;
 
@@ -78,7 +82,7 @@ public class softwareDetails {
 
     // This constructor is use for post product
     @Ignore
-    public softwareDetails(String sellerID, String Name, String Description, String exeURl, String demoVideoURl, String hostURL, String Cost, String Category, String[] screenShot) {
+    public softwareDetails(String sellerID, String Name, String Description, String exeURl, String demoVideoURl, String hostURL, String Cost, String Category, String[] screenShot, String[] screenshotPublicID) {
         this.sellerID = sellerID;
         this.Name = Name;
         this.Description = Description;
@@ -88,10 +92,12 @@ public class softwareDetails {
         this.Cost = Cost;
         this.Category = Category;
         this.screenShot = screenShot;
+        this.screenshotPublicID = screenshotPublicID;
     }
 
+    //This constructor is use for sellers my product
     @Ignore
-    public softwareDetails(@NonNull String productID, String sellerID, String Name, String Description, String exeURl, String demoVideoURl, String hostURL, String Cost, String Category, String[] screenShot) {
+    public softwareDetails(@NonNull String productID, String sellerID, String Name, String Description, String exeURl, String demoVideoURl, String hostURL, String Cost, String Category, String[] screenShot, String[] screenshotPublicID) {
         this.productID = productID;
         this.sellerID = sellerID;
         this.Name = Name;
@@ -102,6 +108,7 @@ public class softwareDetails {
         this.Cost = Cost;
         this.Category = Category;
         this.screenShot = screenShot;
+        this.screenshotPublicID = screenshotPublicID;
     }
 
     @NonNull
@@ -207,5 +214,13 @@ public class softwareDetails {
 
     public void setUpdatestatus(String updatestatus) {
         this.updatestatus = updatestatus;
+    }
+
+    public String[] getScreenshotPublicID() {
+        return screenshotPublicID;
+    }
+
+    public void setScreenshotPublicID(String[] screenshotPublicID) {
+        this.screenshotPublicID = screenshotPublicID;
     }
 }

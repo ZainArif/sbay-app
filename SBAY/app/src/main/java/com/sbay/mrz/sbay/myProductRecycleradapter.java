@@ -3,7 +3,6 @@ package com.sbay.mrz.sbay;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -32,7 +31,7 @@ public class myProductRecycleradapter extends RecyclerView.Adapter<myProductView
         this.softwareDetailsList = softwareDetailsList;
         this.context = context;
         extraFunctions = new extraFunctions();
-        extraFunctions.customToast((Activity)context,context);
+        extraFunctions.customToast((Activity) context, context);
         apiInterface = ApiClient.getApiClient("products").create(ApiInterface.class);
         fragmentActivity = (FragmentActivity) context;
     }
@@ -40,7 +39,7 @@ public class myProductRecycleradapter extends RecyclerView.Adapter<myProductView
     @NonNull
     @Override
     public myProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View myProductView = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_product_card,parent,false);
+        View myProductView = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_product_card, parent, false);
         myProductViewHolder myProductViewHolder = new myProductViewHolder(myProductView);
         return myProductViewHolder;
     }
@@ -48,7 +47,6 @@ public class myProductRecycleradapter extends RecyclerView.Adapter<myProductView
     @Override
     public void onBindViewHolder(@NonNull myProductViewHolder myProductViewHolder, final int position) {
         final softwareDetails softwareDetails = softwareDetailsList.get(position);
-
         myProductViewHolder.tv_productName.setText(softwareDetails.getName());
         myProductViewHolder.tv_productCat.setText(softwareDetails.getCategory());
 
@@ -58,20 +56,24 @@ public class myProductRecycleradapter extends RecyclerView.Adapter<myProductView
         myProductViewHolder.btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                extraFunctions.showProgressDialog(context,"Deleting Product");
+                final String[] pScreenshotsPublicId = softwareDetails.getScreenshotPublicID();
                 Call<softwareDetails> delProductCall = apiInterface.delProduct(softwareDetails.getProductID());
                 delProductCall.enqueue(new Callback<softwareDetails>() {
                     @Override
                     public void onResponse(Call<softwareDetails> call, Response<softwareDetails> response) {
                         String delStatus = response.body().getDelstatus();
-                        if (delStatus.equals("deleted")){
-                            extraFunctions.text.setText(context.getResources().getString(R.string.productdeleted));
-                            extraFunctions.toast.show();
+                        if (delStatus.equals("deleted")) {
+                            delAsyncTask delAsyncTask = new delAsyncTask(context);
+                            delAsyncTask.execute(pScreenshotsPublicId[0]);
                             softwareDetailsList.remove(position);
                             notifyItemRemoved(position);
                             notifyDataSetChanged();
-                        }
-                        else {
+                            extraFunctions.hideProgressDialog();
+                            extraFunctions.text.setText(context.getResources().getString(R.string.productdeleted));
+                            extraFunctions.toast.show();
+                        } else {
+                            extraFunctions.hideProgressDialog();
                             extraFunctions.text.setText(context.getResources().getString(R.string.sww));
                             extraFunctions.toast.show();
                         }
@@ -79,6 +81,7 @@ public class myProductRecycleradapter extends RecyclerView.Adapter<myProductView
 
                     @Override
                     public void onFailure(Call<softwareDetails> call, Throwable t) {
+                        extraFunctions.hideProgressDialog();
                         extraFunctions.text.setText(context.getResources().getString(R.string.sww));
                         extraFunctions.toast.show();
                     }
@@ -100,11 +103,12 @@ public class myProductRecycleradapter extends RecyclerView.Adapter<myProductView
                 softwareDetailsBundle.putString("pDemoUrl", softwareDetails.getDemoVideoURl());
                 softwareDetailsBundle.putString("pHostUrl", softwareDetails.getHostURL());
                 softwareDetailsBundle.putStringArray("pScreenshots", softwareDetails.getScreenShot());
+                softwareDetailsBundle.putStringArray("pScreenshotsPublicId", softwareDetails.getScreenshotPublicID());
                 updateProduct = new updateProduct();
                 updateProduct.setArguments(softwareDetailsBundle);
                 fragmentActivity.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container,updateProduct)
-                        .add(new updateProduct(),"updateProduct")
+                        .replace(R.id.fragment_container, updateProduct)
+                        .add(new updateProduct(), "updateProduct")
                         .addToBackStack("updateProduct")
                         .commit();
             }

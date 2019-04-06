@@ -65,7 +65,7 @@
     <string name="pname">"Product Name"</string>
     <string name="pdesc">"Product Description"</string>
     <string name="pcost">"Product Cost"</string>
-    <string name="pcat">"Product Category : "</string>
+    <string name="pcat">"Product Category"</string>
     <string name="promptcat">"Choose a category"</string>
     <string-array name="product_categories">
         <item>Android/Ios App</item>
@@ -99,5 +99,6 @@
 
     <string name="updateyourproduct">"Update Your Product"</string>
     <string name="pupdated">"Product Updated"</string>
+
 
 </resources>
