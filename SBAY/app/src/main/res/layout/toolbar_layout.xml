@@ -30,11 +30,11 @@
     </LinearLayout>
 
 
-    <android.support.v7.widget.SearchView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_white"
-        android:layout_margin="10dp" />
+    <!--<android.support.v7.widget.SearchView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/border_white"-->
+        <!--android:layout_margin="10dp" />-->
 
 </LinearLayout>
 
