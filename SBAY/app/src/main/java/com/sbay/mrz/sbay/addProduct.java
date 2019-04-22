@@ -1,6 +1,8 @@
 package com.sbay.mrz.sbay;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
@@ -83,6 +85,8 @@ public class addProduct extends Fragment {
     private Uri path;
     private Bitmap bitmap;
 
+    private AlertDialog.Builder alertDialog;
+
     public addProduct() {
         // Required empty public constructor
     }
@@ -92,6 +96,8 @@ public class addProduct extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_add_product, container, false);
+
+        alertDialog = new AlertDialog.Builder(this.getContext());
 
         apiInterface = ApiClient.getApiClient("products").create(ApiInterface.class);
 
@@ -141,13 +147,42 @@ public class addProduct extends Fragment {
                     return;
                 }
 
-                extraFunctions.showProgressDialog(getContext(), "Saving Product");
+                alertDialog.setTitle("Confirmation");
+                alertDialog.setMessage("Are you sure you want to save this information?");
 
-                if (!isImageUpload) {
-                    uploadImage();
-                }
-                else
-                    postProduct();
+                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        extraFunctions.showProgressDialog(getContext(), "Saving Product");
+
+                        dialog.dismiss();
+
+                        if (pExeUrl.isEmpty())
+                            pExeUrl = getResources().getString(R.string.notavailable);
+
+                        if (pDemoUrl.isEmpty())
+                            pDemoUrl = getResources().getString(R.string.notavailable);
+
+                        if (pHostUrl.isEmpty())
+                            pHostUrl = getResources().getString(R.string.notavailable);
+
+                        if (!isImageUpload) {
+                            uploadImage();
+                        }
+                        else
+                            postProduct();
+                    }
+                });
+
+                alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                alertDialog.create().show();
+
                 // postProduct();
 //                }
 //                else {

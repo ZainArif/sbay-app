@@ -79,8 +79,7 @@ public class home extends AppCompatActivity {
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new cart())
-                        .add(new cart(),"cart")
-                        .addToBackStack("cart")
+                        .addToBackStack(null)
                         .commit();
             }
         });

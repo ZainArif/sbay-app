@@ -45,8 +45,12 @@ public class products extends Fragment {
     private String productCost;
     private String productDemoVideoUrl;
     private String[] productScreenshots;
+    private String productHostUrl;
 
     private extraFunctions extraFunctions;
+
+    private Bundle softwareTypeBundle;
+    private categoryProducts categoryProducts;
 
     public products() {
         // Required empty public constructor
@@ -73,9 +77,12 @@ public class products extends Fragment {
         mobileApps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                softwareTypeBundle = new Bundle();
+                softwareTypeBundle.putString("pCatType",getResources().getString(R.string.mobileapp));
+                categoryProducts = new categoryProducts();
+                categoryProducts.setArguments(softwareTypeBundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new mobileApps())
-                        .add(new mobileApps(),"mobile")
+                        .replace(R.id.fragment_container, categoryProducts)
                         .addToBackStack("mobile")
                         .commit();
             }
@@ -85,10 +92,13 @@ public class products extends Fragment {
         webApps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                softwareTypeBundle = new Bundle();
+                softwareTypeBundle.putString("pCatType",getResources().getString(R.string.webapp));
+                categoryProducts = new categoryProducts();
+                categoryProducts.setArguments(softwareTypeBundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new webApps())
-                        .add(new webApps(),"web")
-                        .addToBackStack("web")
+                        .replace(R.id.fragment_container, categoryProducts)
+                        .addToBackStack(null)
                         .commit();
             }
         });
@@ -97,10 +107,13 @@ public class products extends Fragment {
         vr_ar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                softwareTypeBundle = new Bundle();
+                softwareTypeBundle.putString("pCatType",getResources().getString(R.string.vr_ar));
+                categoryProducts = new categoryProducts();
+                categoryProducts.setArguments(softwareTypeBundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new vr_ar())
-                        .add(new vr_ar(),"vrar")
-                        .addToBackStack("vrar")
+                        .replace(R.id.fragment_container, categoryProducts)
+                        .addToBackStack(null)
                         .commit();
             }
         });
@@ -109,10 +122,13 @@ public class products extends Fragment {
         ai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                softwareTypeBundle = new Bundle();
+                softwareTypeBundle.putString("pCatType",getResources().getString(R.string.ai));
+                categoryProducts = new categoryProducts();
+                categoryProducts.setArguments(softwareTypeBundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new ai())
-                        .add(new ai(),"ai")
-                        .addToBackStack("ai")
+                        .replace(R.id.fragment_container, categoryProducts)
+                        .addToBackStack(null)
                         .commit();
             }
         });
@@ -121,10 +137,13 @@ public class products extends Fragment {
         ecommerce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                softwareTypeBundle = new Bundle();
+                softwareTypeBundle.putString("pCatType",getResources().getString(R.string.ecommerce));
+                categoryProducts = new categoryProducts();
+                categoryProducts.setArguments(softwareTypeBundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new ecommerce())
-                        .add(new ecommerce(),"ecommerce")
-                        .addToBackStack("ecommerce")
+                        .replace(R.id.fragment_container, categoryProducts)
+                        .addToBackStack(null)
                         .commit();
             }
         });
@@ -133,10 +152,13 @@ public class products extends Fragment {
         iot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                softwareTypeBundle = new Bundle();
+                softwareTypeBundle.putString("pCatType",getResources().getString(R.string.iot));
+                categoryProducts = new categoryProducts();
+                categoryProducts.setArguments(softwareTypeBundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new iot())
-                        .add(new iot(),"iot")
-                        .addToBackStack("iot")
+                        .replace(R.id.fragment_container, categoryProducts)
+                        .addToBackStack(null)
                         .commit();
             }
         });
@@ -167,15 +189,18 @@ public class products extends Fragment {
                     productCost = response.body().get(index).getCost();
                     productDemoVideoUrl = response.body().get(index).getDemoVideoURl();
                     productScreenshots = response.body().get(index).getScreenShot();
-                    softwareDetailsList.add(new softwareDetails(productId,productName,productDesc,productCat,productCost,productDemoVideoUrl,productScreenshots));
+                    productHostUrl = response.body().get(index).getHostURL();
+                    softwareDetailsList.add(new softwareDetails(productId,productName,productDesc,productCat,productCost,productDemoVideoUrl,productScreenshots,productHostUrl));
                     customRecyclerAdapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onFailure(Call<List<softwareDetails>> call, Throwable t) {
-                extraFunctions.text.setText(getResources().getString(R.string.sww));
-                extraFunctions.toast.show();
+                if (getActivity()!=null && isAdded()){
+                    extraFunctions.text.setText(getResources().getString(R.string.sww));
+                    extraFunctions.toast.show();
+                }
             }
         });
     }

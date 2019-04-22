@@ -109,7 +109,31 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:paddingStart="4dp"
-                    android:paddingEnd="4dp"/>
+                    android:paddingEnd="4dp"
+                    android:enabled="false"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hostUrl"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/productHostUrl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:enabled="false"/>
             </LinearLayout>
 
             <TextView

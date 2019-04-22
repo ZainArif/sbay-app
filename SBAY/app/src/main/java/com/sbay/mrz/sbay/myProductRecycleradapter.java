@@ -1,7 +1,9 @@
 package com.sbay.mrz.sbay;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
@@ -27,6 +29,8 @@ public class myProductRecycleradapter extends RecyclerView.Adapter<myProductView
     private Bundle softwareDetailsBundle;
     private updateProduct updateProduct;
 
+    private AlertDialog.Builder alertDialog;
+
     public myProductRecycleradapter(ArrayList<softwareDetails> softwareDetailsList, Context context) {
         this.softwareDetailsList = softwareDetailsList;
         this.context = context;
@@ -34,6 +38,7 @@ public class myProductRecycleradapter extends RecyclerView.Adapter<myProductView
         extraFunctions.customToast((Activity) context, context);
         apiInterface = ApiClient.getApiClient("products").create(ApiInterface.class);
         fragmentActivity = (FragmentActivity) context;
+        alertDialog = new AlertDialog.Builder(context);
     }
 
     @NonNull
@@ -56,36 +61,56 @@ public class myProductRecycleradapter extends RecyclerView.Adapter<myProductView
         myProductViewHolder.btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                extraFunctions.showProgressDialog(context,"Deleting Product");
-                final String[] pScreenshotsPublicId = softwareDetails.getScreenshotPublicID();
-                Call<softwareDetails> delProductCall = apiInterface.delProduct(softwareDetails.getProductID());
-                delProductCall.enqueue(new Callback<softwareDetails>() {
-                    @Override
-                    public void onResponse(Call<softwareDetails> call, Response<softwareDetails> response) {
-                        String delStatus = response.body().getDelstatus();
-                        if (delStatus.equals("deleted")) {
-                            delAsyncTask delAsyncTask = new delAsyncTask(context);
-                            delAsyncTask.execute(pScreenshotsPublicId[0]);
-                            softwareDetailsList.remove(position);
-                            notifyItemRemoved(position);
-                            notifyDataSetChanged();
-                            extraFunctions.hideProgressDialog();
-                            extraFunctions.text.setText(context.getResources().getString(R.string.productdeleted));
-                            extraFunctions.toast.show();
-                        } else {
-                            extraFunctions.hideProgressDialog();
-                            extraFunctions.text.setText(context.getResources().getString(R.string.sww));
-                            extraFunctions.toast.show();
-                        }
-                    }
 
+                alertDialog.setTitle("Confirmation");
+                alertDialog.setMessage("Are you sure you want to delete this product?");
+
+                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onFailure(Call<softwareDetails> call, Throwable t) {
-                        extraFunctions.hideProgressDialog();
-                        extraFunctions.text.setText(context.getResources().getString(R.string.sww));
-                        extraFunctions.toast.show();
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                        extraFunctions.showProgressDialog(context,"Deleting Product");
+                        final String[] pScreenshotsPublicId = softwareDetails.getScreenshotPublicID();
+                        Call<softwareDetails> delProductCall = apiInterface.delProduct(softwareDetails.getProductID());
+                        delProductCall.enqueue(new Callback<softwareDetails>() {
+                            @Override
+                            public void onResponse(Call<softwareDetails> call, Response<softwareDetails> response) {
+                                String delStatus = response.body().getDelstatus();
+                                if (delStatus.equals("deleted")) {
+                                    delAsyncTask delAsyncTask = new delAsyncTask(context);
+                                    delAsyncTask.execute(pScreenshotsPublicId[0]);
+                                    softwareDetailsList.remove(position);
+                                    notifyItemRemoved(position);
+                                    notifyDataSetChanged();
+                                    extraFunctions.hideProgressDialog();
+                                    extraFunctions.text.setText(context.getResources().getString(R.string.productdeleted));
+                                    extraFunctions.toast.show();
+                                } else {
+                                    extraFunctions.hideProgressDialog();
+                                    extraFunctions.text.setText(context.getResources().getString(R.string.sww));
+                                    extraFunctions.toast.show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<softwareDetails> call, Throwable t) {
+                                extraFunctions.hideProgressDialog();
+                                extraFunctions.text.setText(context.getResources().getString(R.string.sww));
+                                extraFunctions.toast.show();
+                            }
+                        });
                     }
                 });
+
+                alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                alertDialog.create().show();
+
             }
         });
 

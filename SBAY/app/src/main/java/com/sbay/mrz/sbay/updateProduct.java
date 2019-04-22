@@ -1,6 +1,8 @@
 package com.sbay.mrz.sbay;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -90,6 +92,8 @@ public class updateProduct extends Fragment {
 
     private static final String TAG = "Media Manager Exception";
 
+    private AlertDialog.Builder alertDialog;
+
     public updateProduct() {
         // Required empty public constructor
     }
@@ -100,6 +104,8 @@ public class updateProduct extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_update_product, container, false);
+
+        alertDialog = new AlertDialog.Builder(this.getContext());
 
         isImageUpload = false;
         isImageSelect = false;
@@ -145,21 +151,24 @@ public class updateProduct extends Fragment {
             et_productName.setText(pName);
             et_productDesc.setText(pDesc);
             et_productCost.setText(pCost);
+            et_productExeUrl.setText(pExeUrl);
+            et_productDemoUrl.setText(pDemoUrl);
+            et_productHostUrl.setText(pHostUrl);
 
-            if (pExeUrl.equals(""))
-                et_productExeUrl.setText(getResources().getString(R.string.notavailable));
-            else
-                et_productExeUrl.setText(pExeUrl);
+//            if (pExeUrl.equals(""))
+//                et_productExeUrl.setText(getResources().getString(R.string.notavailable));
+//            else
+//
+//
+//            if (pDemoUrl.equals(""))
+//                et_productDemoUrl.setText(getResources().getString(R.string.notavailable));
+//            else
+//
+//
+//            if (pHostUrl.equals(""))
+//                et_productHostUrl.setText(getResources().getString(R.string.notavailable));
+//            else
 
-            if (pDemoUrl.equals(""))
-                et_productDemoUrl.setText(getResources().getString(R.string.notavailable));
-            else
-                et_productDemoUrl.setText(pDemoUrl);
-
-            if (pHostUrl.equals(""))
-                et_productHostUrl.setText(getResources().getString(R.string.notavailable));
-            else
-                et_productHostUrl.setText(pHostUrl);
 
             for (int i=0; i<spinnerList.length; i++){
                 if (spinnerList[i].equals(pCat)){
@@ -233,26 +242,47 @@ public class updateProduct extends Fragment {
         btn_updateProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                extraFunctions.closeKeyboard(getActivity(), getContext());
-                extraFunctions.showProgressDialog(getContext(), "Updating Product");
 
-                pName = et_productName.getText().toString();
-                pDesc = et_productDesc.getText().toString();
-                pCost = et_productCost.getText().toString();
-                pExeUrl = et_productExeUrl.getText().toString();
-                pDemoUrl = et_productDemoUrl.getText().toString();
-                pHostUrl = et_productHostUrl.getText().toString();
-                pCat = sp_productCat.getSelectedItem().toString();
+                alertDialog.setTitle("Confirmation");
+                alertDialog.setMessage("Are you sure you want to update this information?");
 
-                if (isImageSelect){
-                    if (!isImageUpload) {
-                        uploadImage();
+                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        extraFunctions.showProgressDialog(getContext(), "Updating Product");
+
+                        dialog.dismiss();
+
+                        extraFunctions.closeKeyboard(getActivity(), getContext());
+
+                        pName = et_productName.getText().toString();
+                        pDesc = et_productDesc.getText().toString();
+                        pCost = et_productCost.getText().toString();
+                        pExeUrl = et_productExeUrl.getText().toString();
+                        pDemoUrl = et_productDemoUrl.getText().toString();
+                        pHostUrl = et_productHostUrl.getText().toString();
+                        pCat = sp_productCat.getSelectedItem().toString();
+
+                        if (isImageSelect){
+                            if (!isImageUpload) {
+                                uploadImage();
+                            }
+                            else
+                                update_product();
+                        }
+                        else
+                            update_product();
                     }
-                    else
-                        update_product();
-                }
-                else
-                    update_product();
+                });
+
+                alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                alertDialog.create().show();
+
             }
         });
 

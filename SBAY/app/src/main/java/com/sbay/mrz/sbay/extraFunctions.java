@@ -1,8 +1,10 @@
 package com.sbay.mrz.sbay;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,8 @@ public class extraFunctions {
     public TextView text;
     public Toast toast;
     public ProgressDialog mProgressDialog;
+    public AlertDialog.Builder alertDialog;
+    private boolean confirmation;
 
     public void closeKeyboard(Activity activity, Context context) {
         view = activity.getCurrentFocus();
@@ -43,7 +47,7 @@ public class extraFunctions {
         layout = inflater.inflate(R.layout.customtoast, (ViewGroup) activity.findViewById(R.id.custom_toast_container));
         text = (TextView) layout.findViewById(R.id.textToast);
         toast = new Toast(context);
-        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 250);
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 430);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
     }

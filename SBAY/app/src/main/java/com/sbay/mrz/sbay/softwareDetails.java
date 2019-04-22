@@ -70,7 +70,7 @@ public class softwareDetails {
 
     // This constructor is use for calling all softwares & software categories
     @Ignore
-    public softwareDetails(@NonNull String productID, String Name, String Description, String Category, String Cost, String demoVideoURl, String[] screenShot) {
+    public softwareDetails(@NonNull String productID, String Name, String Description, String Category, String Cost, String demoVideoURl, String[] screenShot, String hostURL) {
         this.productID = productID;
         this.Name = Name;
         this.Description = Description;
@@ -78,6 +78,7 @@ public class softwareDetails {
         this.Cost = Cost;
         this.demoVideoURl = demoVideoURl;
         this.screenShot = screenShot;
+        this.hostURL = hostURL;
     }
 
     // This constructor is use for post product

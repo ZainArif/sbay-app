@@ -56,6 +56,7 @@ public class productsViewHolder extends RecyclerView.ViewHolder implements View.
         softwareDetailsBundle.putString("pCat", softwareDetails.getCategory());
         softwareDetailsBundle.putString("pCost", softwareDetails.getCost());
         softwareDetailsBundle.putString("pDemoUrl", softwareDetails.getDemoVideoURl());
+        softwareDetailsBundle.putString("pHostUrl", softwareDetails.getHostURL());
         softwareDetailsBundle.putStringArray("pScreenshots", softwareDetails.getScreenShot());
         productInfo = new productInfo();
         productInfo.setArguments(softwareDetailsBundle);

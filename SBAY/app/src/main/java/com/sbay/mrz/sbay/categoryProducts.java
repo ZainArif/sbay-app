@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class vr_ar extends Fragment {
+public class categoryProducts extends Fragment {
     private View rootView;
 
     private RecyclerView myRecyclerView;
@@ -37,11 +38,15 @@ public class vr_ar extends Fragment {
     private String productCost;
     private String productDemoVideoUrl;
     private String[] productScreenshots;
+    private String productHostUrl;
 
     private extraFunctions extraFunctions;
 
+    private Bundle softwareTypeBundle;
 
-    public vr_ar() {
+    private TextView tv_pCatType;
+
+    public categoryProducts() {
         // Required empty public constructor
     }
 
@@ -50,12 +55,14 @@ public class vr_ar extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_vr_ar, container, false);
-
+        rootView = inflater.inflate(R.layout.fragment_category_products, container, false);
+        tv_pCatType = (TextView)rootView.findViewById(R.id.pCatType);
         apiInterface = ApiClient.getApiClient("products").create(ApiInterface.class);
 
         extraFunctions  = new extraFunctions();
         extraFunctions.customToast(getActivity(),getContext());
+
+        softwareTypeBundle = this.getArguments();
 
         softwareDetailsList = new ArrayList<>();
         myRecyclerView = (RecyclerView)rootView.findViewById(R.id.myRecyclerView);
@@ -75,7 +82,38 @@ public class vr_ar extends Fragment {
 
     private void getSoftwares(){
 
-        Call<List<softwareDetails>> softwareDetalisListCall = apiInterface.vrar();
+        Call<List<softwareDetails>> softwareDetalisListCall = null;
+
+        if (softwareTypeBundle!=null){
+            String pCatType = softwareTypeBundle.getString("pCatType");
+
+            if (pCatType.equals(getResources().getString(R.string.mobileapp))){
+                tv_pCatType.setText(pCatType);
+                softwareDetalisListCall = apiInterface.mobileApps();
+            }
+            else if (pCatType.equals(getResources().getString(R.string.webapp))){
+                tv_pCatType.setText(pCatType);
+                softwareDetalisListCall = apiInterface.webApps();
+            }
+            else if (pCatType.equals(getResources().getString(R.string.vr_ar))){
+                tv_pCatType.setText(pCatType);
+                softwareDetalisListCall = apiInterface.vrar();
+            }
+            else if (pCatType.equals(getResources().getString(R.string.ai))){
+                tv_pCatType.setText(pCatType);
+                softwareDetalisListCall = apiInterface.ai();
+            }
+            else if (pCatType.equals(getResources().getString(R.string.ecommerce))){
+                tv_pCatType.setText(pCatType);
+                softwareDetalisListCall = apiInterface.ecommerce();
+            }
+            else {
+                tv_pCatType.setText(pCatType);
+                softwareDetalisListCall = apiInterface.iot();
+            }
+
+        }
+
         softwareDetalisListCall.enqueue(new Callback<List<softwareDetails>>() {
             @Override
             public void onResponse(Call<List<softwareDetails>> call, Response<List<softwareDetails>> response) {
@@ -89,15 +127,18 @@ public class vr_ar extends Fragment {
                     productCost = response.body().get(index).getCost();
                     productDemoVideoUrl = response.body().get(index).getDemoVideoURl();
                     productScreenshots = response.body().get(index).getScreenShot();
-                    softwareDetailsList.add(new softwareDetails(productId,productName,productDesc,productCat,productCost,productDemoVideoUrl,productScreenshots));
+                    productHostUrl = response.body().get(index).getHostURL();
+                    softwareDetailsList.add(new softwareDetails(productId,productName,productDesc,productCat,productCost,productDemoVideoUrl,productScreenshots,productHostUrl));
                     customRecyclerAdapter1.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onFailure(Call<List<softwareDetails>> call, Throwable t) {
-                extraFunctions.text.setText(getResources().getString(R.string.sww));
-                extraFunctions.toast.show();
+                if (getActivity()!=null && isAdded()){
+                    extraFunctions.text.setText(getResources().getString(R.string.sww));
+                    extraFunctions.toast.show();
+                }
             }
         });
     }
