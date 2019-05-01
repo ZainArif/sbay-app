@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cloudinary.android.MediaManager;
 
@@ -46,7 +45,10 @@ public class home extends AppCompatActivity {
     private addProduct addProduct;
     private myProduct myProduct;
 
+    private String cust_id;
+
     private static final String TAG = "Media Manager Exception";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +158,7 @@ public class home extends AppCompatActivity {
                 menuType = data.getStringExtra("menu type");
                 seller_cust_id = data.getStringExtra("seller_cust_id");
 
+
                 if (menuType.equals("Seller")){
                     tv_headerEnterAccount.setVisibility(View.GONE);
                     tv_headerLogin.setVisibility(View.GONE);
@@ -177,6 +180,7 @@ public class home extends AppCompatActivity {
                     tv_headerEmail.setText(email);
                     tv_headerMenu.setText(menuType + " " + getResources().getString(R.string.menu));
                     menuView.setGroupVisible(R.id.menuCustomer,true);
+                    cust_id = seller_cust_id;
                 }
 
             }
@@ -194,4 +198,7 @@ public class home extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public String getCust_id() {
+        return cust_id;
+    }
 }

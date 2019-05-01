@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -42,11 +41,15 @@ public class productInfo extends Fragment {
     private ImageView iv_productImage;
 
     private Button btn_addToCart;
+    private Button btn_appForCustz;
 
     private extraFunctions extraFunctions;
 
     private softwareDetails softwareDetails;
     private ProductsDatabase productsDatabase;
+
+    private home home;
+    private String cust_id;
 
     public productInfo() {
         // Required empty public constructor
@@ -63,6 +66,8 @@ public class productInfo extends Fragment {
 
         extraFunctions = new extraFunctions();
         extraFunctions.customToast(getActivity(), getContext());
+
+        home = (home) getActivity();
 
         tv_pCost = (TextView) rootView.findViewById(R.id.productCost);
         tv_pName = (TextView) rootView.findViewById(R.id.productName);
@@ -137,6 +142,32 @@ public class productInfo extends Fragment {
                         extraFunctions.toast.show();
                     }
                 }
+            }
+        });
+
+        btn_appForCustz = (Button) rootView.findViewById(R.id.appForCustz);
+        btn_appForCustz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cust_id = home.getCust_id();
+                if (cust_id==null){
+                    extraFunctions.text.setText(getResources().getString(R.string.logascust));
+                    extraFunctions.toast.show();
+                }
+                else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("pId",pId);
+                    bundle.putString("pName",pName);
+                    bundle.putString("pCat",pCategory);
+                    bundle.putString("cust_id",cust_id);
+                    customizationRequest customizationRequest = new customizationRequest();
+                    customizationRequest.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container,customizationRequest)
+                            .addToBackStack(null)
+                            .commit();
+                }
+
             }
         });
 

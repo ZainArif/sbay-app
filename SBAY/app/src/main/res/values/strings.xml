@@ -102,5 +102,8 @@
     <string name="pupdated">"Product Updated"</string>
 
     <string name="custrequest">"Describe in detail what customization you want in this software"</string>
+    <string name="appforcustz">"Apply for customization"</string>
+    <string name="logascust">"Login as customer"</string>
+    <string name="custreqsent">"Your request for customization has been sent"</string>
 
 </resources>

@@ -64,4 +64,7 @@ public interface ApiInterface {
 
     @PATCH("updateProduct")
     Call<softwareDetails> updateProduct(@Query("productid") String productId, @Body softwareDetails details);
+
+    @POST("postCustom")
+    Call<productCustomization> productCustom(@Body productCustomization productCustomization);
 }
