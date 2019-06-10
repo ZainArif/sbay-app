@@ -15,6 +15,12 @@
     <string name="gtsya">"Good To See You Again&#33;"</string>
     <string name="ltmyb">"Login to manage your bookings"</string>
     <string name="dhaa">"Don't have an account? "</string>
+    <string name="forgotpsw">"Forgot password? "</string>
+    <string name="clickHere">"Click here"</string>
+    <string name="resetpsw">"Reset Password&#33;"</string>
+    <string name="spre">"Send Password Reset Email"</string>
+    <string name="emailnotfound">"Email not found"</string>
+    <string name="resetemailsent">"Password reset email sent to "</string>
 
     <string name="cust">"Customer"</string>
     <string name="seller">"Seller"</string>
@@ -96,6 +102,7 @@
     <string name="notification">"Notification"</string>
     <string name="logout">"Logout"</string>
     <string name="mypurchase">"My Purchase"</string>
+    <string name="newsoftwarerequest">"New Software Request"</string>
     <string name="edit">"Edit</string>
 
     <string name="updateyourproduct">"Update Your Product"</string>
@@ -105,5 +112,13 @@
     <string name="appforcustz">"Apply for customization"</string>
     <string name="logascust">"Login as customer"</string>
     <string name="custreqsent">"Your request for customization has been sent"</string>
+
+    <string name="afns">"Apply For New Software Development"</string>
+    <string name="ps">"Select Category</string>
+    <string name="newrequest">"Describe in detail what you want in this software"</string>
+    <string name="newreqsent">"Your request for new software development has been sent"</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

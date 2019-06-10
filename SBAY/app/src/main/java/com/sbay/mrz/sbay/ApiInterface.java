@@ -65,6 +65,12 @@ public interface ApiInterface {
     @PATCH("updateProduct")
     Call<softwareDetails> updateProduct(@Query("productid") String productId, @Body softwareDetails details);
 
-    @POST("postCustom")
+    @POST("postcustom")
     Call<productCustomization> productCustom(@Body productCustomization productCustomization);
+
+    @POST("postnew")
+    Call<newProduct> newProduct(@Body newProduct newProduct);
+
+    @POST("forgotPassword")
+    Call<PasswordResetResponse> sellerResetPsw(@Body PasswordResetResponse email);
 }

@@ -11,8 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextClock;
-import android.widget.TextView;
+import android.widget.Spinner;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,28 +21,25 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class customizationRequest extends Fragment {
+public class newSoftwareRequest extends Fragment {
     private View rootView;
 
-    private String productId;
-    private String productCat;
-    private String productName;
-    private String productDesc;
+    private String newProductDesc;
     private String cust_id;
+    private String pCat;
 
-    private TextView pName;
-    private TextView pCat;
+    private Spinner sp_productCat;
     private EditText pDesc;
     private Button btn_submit;
 
     private ApiInterface apiInterface;
     private extraFunctions extraFunctions;
 
-    private Bundle custBundle;
+    private Bundle bundle;
 
     private AlertDialog.Builder alertDialog;
 
-    public customizationRequest() {
+    public newSoftwareRequest() {
         // Required empty public constructor
     }
 
@@ -52,37 +48,31 @@ public class customizationRequest extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_customization_request, container, false);
+        rootView =  inflater.inflate(R.layout.fragment_new_software_request, container, false);
 
         alertDialog = new AlertDialog.Builder(this.getContext());
 
-        apiInterface = ApiClient.getApiClient("customRequest").create(ApiInterface.class);
+        apiInterface = ApiClient.getApiClient("newRequest").create(ApiInterface.class);
 
         extraFunctions = new extraFunctions();
         extraFunctions.customToast(getActivity(), getContext());
 
-        pName = (TextView)rootView.findViewById(R.id.pName);
-        pCat = (TextView)rootView.findViewById(R.id.pCat);
+        sp_productCat = (Spinner) rootView.findViewById(R.id.sp_productCat);
         pDesc = (EditText) rootView.findViewById(R.id.pDesc);
-        btn_submit = (Button)rootView.findViewById(R.id.btn_customiztionRequest);
+        btn_submit = (Button)rootView.findViewById(R.id.btn_newRequest);
 
-        custBundle = this.getArguments();
-
-        if (custBundle!=null){
-            productId = custBundle.getString("pId");
-            productName = custBundle.getString("pName");
-            productCat = custBundle.getString("pCat");
-            cust_id = custBundle.getString("cust_id");
-            pName.setText(productName);
-            pCat.setText(productCat);
+        bundle = this.getArguments();
+        if (bundle!=null){
+            cust_id = bundle.getString("seller_cust_id");
         }
 
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 extraFunctions.closeKeyboard(getActivity(),getContext());
-                productDesc = pDesc.getText().toString();
-                if (TextUtils.isEmpty(productDesc)){
+                pCat = sp_productCat.getSelectedItem().toString();
+                newProductDesc = pDesc.getText().toString();
+                if (TextUtils.isEmpty(newProductDesc)){
                     pDesc.setError("Required");
                     return;
                 }
@@ -94,8 +84,8 @@ public class customizationRequest extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        extraFunctions.showProgressDialog(getContext(),"Applying for customization");
-                        customization_request();
+                        extraFunctions.showProgressDialog(getContext(),"Applying for new software development");
+                        newRequest();
                     }
                 });
 
@@ -112,26 +102,26 @@ public class customizationRequest extends Fragment {
         return rootView;
     }
 
-    private void customization_request(){
-        productCustomization productCustomization = new productCustomization(cust_id,productId,productDesc);
+    private void newRequest(){
+        newProduct product = new newProduct(cust_id,newProductDesc,pCat);
 
-        Call<productCustomization> productCustomizationCall = apiInterface.productCustom(productCustomization);
-        productCustomizationCall.enqueue(new Callback<com.sbay.mrz.sbay.productCustomization>() {
+        Call<newProduct> newProductCall = apiInterface.newProduct(product);
+        newProductCall.enqueue(new Callback<newProduct>() {
             @Override
-            public void onResponse(Call<com.sbay.mrz.sbay.productCustomization> call, Response<com.sbay.mrz.sbay.productCustomization> response) {
+            public void onResponse(Call<newProduct> call, Response<newProduct> response) {
                 if (response.body().getCustId().equals(cust_id)){
                     extraFunctions.hideProgressDialog();
-                    extraFunctions.text.setText(getResources().getString(R.string.custreqsent));
+                    extraFunctions.text.setText(getResources().getString(R.string.newreqsent));
                     extraFunctions.toast.show();
                     pDesc.getText().clear();
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .remove(customizationRequest.this).commit();
-                    getActivity().getSupportFragmentManager().popBackStack();
+//                    getActivity().getSupportFragmentManager().beginTransaction()
+//                            .remove(customizationRequest.this).commit();
+//                    getActivity().getSupportFragmentManager().popBackStack();
                 }
             }
 
             @Override
-            public void onFailure(Call<com.sbay.mrz.sbay.productCustomization> call, Throwable t) {
+            public void onFailure(Call<newProduct> call, Throwable t) {
                 if (getActivity()!=null && isAdded()){
                     extraFunctions.hideProgressDialog();
                     extraFunctions.text.setText(getResources().getString(R.string.sww));
@@ -141,5 +131,4 @@ public class customizationRequest extends Fragment {
         });
 
     }
-
 }

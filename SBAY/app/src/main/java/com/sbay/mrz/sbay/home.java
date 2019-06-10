@@ -49,7 +49,7 @@ public class home extends AppCompatActivity {
 
     private static final String TAG = "Media Manager Exception";
 
-
+    private newSoftwareRequest newSoftwareRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +139,18 @@ public class home extends AppCompatActivity {
                         myProduct.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_container, myProduct)
+                                .commit();
+                        return true;
+
+                    case R.id.nav_newSoftwareRequest:
+                        menuItem.setChecked((true));
+                        drawerLayout.closeDrawers();
+                        bundle = new Bundle();
+                        bundle.putString("seller_cust_id",seller_cust_id);
+                        newSoftwareRequest = new newSoftwareRequest();
+                        newSoftwareRequest.setArguments(bundle);
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, newSoftwareRequest)
                                 .commit();
                         return true;
                 }

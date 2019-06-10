@@ -62,6 +62,12 @@
         </item>
 
         <item
+            android:id="@+id/nav_newSoftwareRequest"
+            android:icon="@drawable/add_product"
+            android:title="@string/newsoftwarerequest">
+        </item>
+
+        <item
             android:id="@+id/nav_custchat"
             android:icon="@drawable/chat"
             android:title="@string/chat">
@@ -70,7 +76,7 @@
         <item
             android:id="@+id/nav_custnotification"
             android:icon="@drawable/notification"
-            android:title="@string/logout">
+            android:title="@string/notification">
         </item>
 
         <item

@@ -19,6 +19,7 @@ public class login extends AppCompatActivity {
     private EditText et_password;
     private Button btn_login;
     private TextView tv_signup;
+    private TextView tv_clickhere;
 
     private ApiInterface apiInterface;
 
@@ -44,6 +45,7 @@ public class login extends AppCompatActivity {
         et_password = (EditText)findViewById(R.id.et_password);
         btn_login = (Button)findViewById(R.id.btn_login);
         tv_signup = (TextView)findViewById(R.id.tv_signup);
+        tv_clickhere = (TextView)findViewById(R.id.tv_clickHere);
 
         emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
@@ -68,6 +70,15 @@ public class login extends AppCompatActivity {
                 Intent signup_Activity = new Intent(login.this, signup.class);
                 signup_Activity.putExtra("sl_type",sl_type);
                 startActivity(signup_Activity);
+            }
+        });
+
+        tv_clickhere.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent forgotpsw_Activity = new Intent(login.this, ForgotPassword.class);
+                forgotpsw_Activity.putExtra("sl_type",sl_type);
+                startActivity(forgotpsw_Activity);
             }
         });
     }
