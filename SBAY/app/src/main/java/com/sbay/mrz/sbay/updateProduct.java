@@ -304,10 +304,10 @@ public class updateProduct extends Fragment {
                     extraFunctions.text.setText(getResources().getString(R.string.pupdated));
                     extraFunctions.toast.show();
 
-                    bundle = new Bundle();
-                    bundle.putString("seller_cust_id",sellerId);
-                    myProduct myProduct = new myProduct();
-                    myProduct.setArguments(bundle);
+//                    bundle = new Bundle();
+//                    bundle.putString("seller_cust_id",sellerId);
+//                    myProduct myProduct = new myProduct();
+//                    myProduct.setArguments(bundle);
 //                    getActivity().getSupportFragmentManager().beginTransaction()
 //                            .replace(R.id.fragment_container, myProduct)
 //                            .commit();

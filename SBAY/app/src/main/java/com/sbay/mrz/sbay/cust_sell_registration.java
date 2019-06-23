@@ -30,6 +30,12 @@ public class cust_sell_registration {
         Address = address;
     }
 
+    public cust_sell_registration(String name, long contact, String address) {
+        Name = name;
+        Contact = contact;
+        Address = address;
+    }
+
     public String getId() {
         return Id;
     }

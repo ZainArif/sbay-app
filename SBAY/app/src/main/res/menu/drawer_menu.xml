@@ -19,7 +19,7 @@
 
         <item
             android:id="@+id/nav_addSoftware"
-            android:icon="@drawable/add_product"
+            android:icon="@drawable/ic_add_software"
             android:title="@string/addsoftware"
             >
         </item>
@@ -63,7 +63,7 @@
 
         <item
             android:id="@+id/nav_newSoftwareRequest"
-            android:icon="@drawable/add_product"
+            android:icon="@drawable/ic_add_software"
             android:title="@string/newsoftwarerequest">
         </item>
 

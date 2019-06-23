@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     private String email;
     private String menuType;
     private String seller_cust_id;
+    private String contact;
+    private String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +56,15 @@ public class MainActivity extends AppCompatActivity {
                 email = data.getStringExtra("email");
                 menuType = data.getStringExtra("menu type");
                 seller_cust_id = data.getStringExtra("seller_cust_id");
-
+                contact = data.getStringExtra("contact");
+                address = data.getStringExtra("address");
                 Intent home_Activity = new Intent();
                 home_Activity.putExtra("seller_cust_id",seller_cust_id);
                 home_Activity.putExtra("username",username);
                 home_Activity.putExtra("email",email);
                 home_Activity.putExtra("menu type",menuType);
+                home_Activity.putExtra("contact",contact);
+                home_Activity.putExtra("address",address);
                 setResult(RESULT_OK,home_Activity);
                 finish();
             }

@@ -83,7 +83,7 @@ public class products extends Fragment {
                 categoryProducts.setArguments(softwareTypeBundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, categoryProducts)
-                        .addToBackStack("mobile")
+                        .addToBackStack(null)
                         .commit();
             }
         });

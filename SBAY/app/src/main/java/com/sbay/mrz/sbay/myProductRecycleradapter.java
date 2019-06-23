@@ -133,8 +133,7 @@ public class myProductRecycleradapter extends RecyclerView.Adapter<myProductView
                 updateProduct.setArguments(softwareDetailsBundle);
                 fragmentActivity.getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, updateProduct)
-                        .add(new updateProduct(), "updateProduct")
-                        .addToBackStack("updateProduct")
+                        .addToBackStack(null)
                         .commit();
             }
         });

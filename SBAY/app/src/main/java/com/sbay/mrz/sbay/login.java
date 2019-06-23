@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import retrofit2.Call;
@@ -20,21 +23,27 @@ public class login extends AppCompatActivity {
     private Button btn_login;
     private TextView tv_signup;
     private TextView tv_clickhere;
+    private ImageButton imgbtn_pswNotVisible;
+    private ImageButton imgbtn_pswVisible;
 
     private ApiInterface apiInterface;
 
+    private String name;
     private String email;
     private String password;
-    private String name;
+    private String contact;
+    private String address;
     private String seller_cust_id;
 
     private String emailPattern;
     private boolean valid;
-
+    private boolean loginStatus;
     private String sl_type;
     private extraFunctions extraFunctions;
 
     private String userStatus;
+
+    private MySharedPreference mySharedPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +55,8 @@ public class login extends AppCompatActivity {
         btn_login = (Button)findViewById(R.id.btn_login);
         tv_signup = (TextView)findViewById(R.id.tv_signup);
         tv_clickhere = (TextView)findViewById(R.id.tv_clickHere);
+        imgbtn_pswNotVisible = (ImageButton)findViewById(R.id.imgbtn_pswNotVisible);
+        imgbtn_pswVisible = (ImageButton)findViewById(R.id.imgbtn_pswVisible);
 
         emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
@@ -55,6 +66,26 @@ public class login extends AppCompatActivity {
         extraFunctions  = new extraFunctions();
         extraFunctions.customToast(login.this,login.this);
 
+        mySharedPreference = new MySharedPreference(getApplicationContext());
+
+        imgbtn_pswNotVisible.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                imgbtn_pswNotVisible.setVisibility(View.GONE);
+                imgbtn_pswVisible.setVisibility(View.VISIBLE);
+            }
+        });
+
+        imgbtn_pswVisible.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                imgbtn_pswVisible.setVisibility(View.GONE);
+                imgbtn_pswNotVisible.setVisibility(View.VISIBLE);
+            }
+        });
+
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +93,7 @@ public class login extends AppCompatActivity {
                 email = et_email.getText().toString();
                 password = et_password.getText().toString();
                 performLogin();
+
             }
         });
         tv_signup.setOnClickListener(new View.OnClickListener() {
@@ -122,14 +154,20 @@ public class login extends AppCompatActivity {
                     if (userStatus.equals(" exist")){
                         extraFunctions.hideProgressDialog();
                         name = response.body().getCustSellRegistration().getName();
+                        contact = String.valueOf( response.body().getCustSellRegistration().getContact() );
+                        address = response.body().getCustSellRegistration().getAddress();
                         seller_cust_id = response.body().getCustSellRegistration().getId();
+                        loginStatus = true;
                         Intent main_Activity = new Intent();
                         main_Activity.putExtra("seller_cust_id",seller_cust_id);
                         main_Activity.putExtra("username",name);
                         main_Activity.putExtra("email",email);
                         main_Activity.putExtra("menu type",getResources().getString(R.string.seller));
+                        main_Activity.putExtra("contact",contact);
+                        main_Activity.putExtra("address",address);
                         setResult(RESULT_OK,main_Activity);
                         finish();
+                        mySharedPreference.writeLoginInfo(seller_cust_id,name,email,contact,address,"Seller",loginStatus);
                     }
                     else if (userStatus.equals(" not exist")){
                         extraFunctions.hideProgressDialog();
@@ -156,14 +194,20 @@ public class login extends AppCompatActivity {
                     if (userStatus.equals(" exist")){
                         extraFunctions.hideProgressDialog();
                         name = response.body().getCustSellRegistration().getName();
+                        contact = String.valueOf( response.body().getCustSellRegistration().getContact() );
+                        address = response.body().getCustSellRegistration().getAddress();
                         seller_cust_id = response.body().getCustSellRegistration().getId();
+                        loginStatus = true;
                         Intent main_activity = new Intent();
                         main_activity.putExtra("seller_cust_id",seller_cust_id);
                         main_activity.putExtra("username",name);
                         main_activity.putExtra("email",email);
                         main_activity.putExtra("menu type",getResources().getString(R.string.cust));
+                        main_activity.putExtra("contact",contact);
+                        main_activity.putExtra("address",address);
                         setResult(RESULT_OK,main_activity);
                         finish();
+                        mySharedPreference.writeLoginInfo(seller_cust_id,name,email,contact,address,"Customer",loginStatus);
                     }
                     else if (userStatus.equals(" not exist")){
                         extraFunctions.hideProgressDialog();

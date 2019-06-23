@@ -73,4 +73,10 @@ public interface ApiInterface {
 
     @POST("forgotPassword")
     Call<PasswordResetResponse> sellerResetPsw(@Body PasswordResetResponse email);
+
+    @PATCH("updateSeller")
+    Call<cust_sell_login> sellerUpdate(@Query("sellersId") String sellerId,@Body cust_sell_registration updateSeller );
+
+    @PATCH("updateCustomer")
+    Call<cust_sell_login> customerUpdate(@Query("customersId") String customerId,@Body cust_sell_registration updateCustomer );
 }

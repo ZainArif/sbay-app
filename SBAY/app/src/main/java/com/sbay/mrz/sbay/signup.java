@@ -4,9 +4,12 @@ import android.content.Intent;;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,6 +24,8 @@ public class signup extends AppCompatActivity {
     private EditText et_address;
     private Button btn_signup;
     private TextView tv_login;
+    private ImageButton imgbtn_pswNotVisible;
+    private ImageButton imgbtn_pswVisible;
 
     private ApiInterface apiInterface;
 
@@ -53,6 +58,8 @@ public class signup extends AppCompatActivity {
         et_address = (EditText)findViewById(R.id.et_address);
         btn_signup = (Button)findViewById(R.id.btn_signup);
         tv_login = (TextView)findViewById(R.id.tv_login);
+        imgbtn_pswNotVisible = (ImageButton)findViewById(R.id.imgbtn_pswNotVisible);
+        imgbtn_pswVisible = (ImageButton)findViewById(R.id.imgbtn_pswVisible);
 
         emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         contactPattren = "^[+]?[0-9]{10,13}$";
@@ -62,6 +69,24 @@ public class signup extends AppCompatActivity {
 
         extraFunctions  = new extraFunctions();
         extraFunctions.customToast(signup.this,signup.this);
+
+        imgbtn_pswNotVisible.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                imgbtn_pswNotVisible.setVisibility(View.GONE);
+                imgbtn_pswVisible.setVisibility(View.VISIBLE);
+            }
+        });
+
+        imgbtn_pswVisible.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                imgbtn_pswVisible.setVisibility(View.GONE);
+                imgbtn_pswNotVisible.setVisibility(View.VISIBLE);
+            }
+        });
 
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override

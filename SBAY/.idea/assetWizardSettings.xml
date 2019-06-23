@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_mode_edit_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_visibility_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,8 +33,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="edit_button" />
-                            <entry key="sourceFile" value="E:\Android apps\SBAY app\SBAY content\shopping_cart.svg" />
+                            <entry key="color" value="ffffff" />
+                            <entry key="outputName" value="ic_visibility_on" />
+                            <entry key="sourceFile" value="D:\AndroidApps\SBAY material\SBAY content\add software.svg" />
                           </map>
                         </option>
                       </PersistentState>

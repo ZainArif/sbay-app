@@ -89,7 +89,7 @@
     <string name="exeurl">"Exe Url"</string>
     <string name="hosturl">"Host Url"</string>
     <string name="demovideourl">"Demo Url"</string>
-    <string name="uploadimage">"Upload Image"</string>
+    <string name="uploadimage">"Upload Feature Image"</string>
     <string name="submit">"Submit"</string>
     <string name="psaved">"Product Saved"</string>
     <string name="selectImage">"Please Upload Image"</string>
@@ -118,7 +118,9 @@
     <string name="newrequest">"Describe in detail what you want in this software"</string>
     <string name="newreqsent">"Your request for new software development has been sent"</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="vep">"View &#38; Edit Your Profile"</string>
+    <string name="profileupdated">"Profile Updated</string>
+    
+    <string name="login_preference">"com.sbay.mrz.sbay_login_preference"</string>
+    <string name="login_status_preference">"com.sbay.mrz.sbay_login_status_preference"</string>
 </resources>
