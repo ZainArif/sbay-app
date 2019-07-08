@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +52,7 @@ public class products extends Fragment {
     private Bundle softwareTypeBundle;
     private categoryProducts categoryProducts;
 
+    private ProgressBar progressBar;
     public products() {
         // Required empty public constructor
     }
@@ -72,6 +73,7 @@ public class products extends Fragment {
         customRecyclerAdapter = new customRecyclerAdapter(softwareDetailsList,getContext());
         myRecyclerView.setLayoutManager(layoutManager);
         myRecyclerView.setAdapter(customRecyclerAdapter);
+        progressBar = (ProgressBar)rootView.findViewById(R.id.progress_circular);
 
         mobileApps = (LinearLayout)rootView.findViewById(R.id.mobileApps);
         mobileApps.setOnClickListener(new View.OnClickListener() {
@@ -180,6 +182,7 @@ public class products extends Fragment {
             @Override
             public void onResponse(Call<List<softwareDetails>> call, Response<List<softwareDetails>> response) {
                 softwareDetailsList.clear();
+
                 for (int index=0;index<response.body().size();index++)
                 {
                     productId = response.body().get(index).getProductID();
@@ -193,11 +196,13 @@ public class products extends Fragment {
                     softwareDetailsList.add(new softwareDetails(productId,productName,productDesc,productCat,productCost,productDemoVideoUrl,productScreenshots,productHostUrl));
                     customRecyclerAdapter.notifyDataSetChanged();
                 }
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<List<softwareDetails>> call, Throwable t) {
                 if (getActivity()!=null && isAdded()){
+                    progressBar.setVisibility(View.GONE);
                     extraFunctions.text.setText(getResources().getString(R.string.sww));
                     extraFunctions.toast.show();
                 }

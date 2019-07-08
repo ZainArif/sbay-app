@@ -1,10 +1,13 @@
 package com.sbay.mrz.sbay;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 public class extraFunctions {
 
     public View view;
@@ -22,8 +27,7 @@ public class extraFunctions {
     public View layout;
     public TextView text;
     public Toast toast;
-    public ProgressDialog mProgressDialog;
-    public AlertDialog.Builder alertDialog;
+    public AlertDialog mProgressDialog;
     private boolean confirmation;
 
     public void closeKeyboard(Activity activity, Context context) {
@@ -47,25 +51,26 @@ public class extraFunctions {
         layout = inflater.inflate(R.layout.customtoast, (ViewGroup) activity.findViewById(R.id.custom_toast_container));
         text = (TextView) layout.findViewById(R.id.textToast);
         toast = new Toast(context);
-        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 430);
+        toast.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL, 0, 150);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
     }
 
+    @SuppressLint("InflateParams")
     public void showProgressDialog(Context context, String message) {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(context);
-            mProgressDialog.setMessage(message);
-            mProgressDialog.setIndeterminate(true);
-        }
-
+        mProgressDialog = new AlertDialog.Builder(context).create();
+        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+        mProgressDialog.setView(inflater.inflate(R.layout.custom_progress_dialog,null));
         mProgressDialog.show();
+        Objects.requireNonNull(mProgressDialog.getWindow()).setBackgroundDrawable(null);
     }
 
     public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
+        mProgressDialog.dismiss();
     }
+
+
+
+
 
 }

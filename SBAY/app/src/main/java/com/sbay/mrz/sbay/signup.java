@@ -173,9 +173,9 @@ public class signup extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<cust_sell_login> call, Response<cust_sell_login> response) {
                     userStatus = response.body().getUserStatus();
-                    if (userStatus.equals("account created")){
+                    if (userStatus.equals("verification email sent")){
                         extraFunctions.hideProgressDialog();
-                        extraFunctions.text.setText(getResources().getString(R.string.sr));
+                        extraFunctions.text.setText(getResources().getString(R.string.verifyemail) + email);
                         extraFunctions.toast.show();
 
                         et_username.getText().clear();
@@ -184,6 +184,11 @@ public class signup extends AppCompatActivity {
                         et_contact.getText().clear();
                         et_address.getText().clear();
 
+                    }
+                    else if (userStatus.equals("verification email not sent")){
+                        extraFunctions.hideProgressDialog();
+                        extraFunctions.text.setText(getResources().getString(R.string.notverifyemail));
+                        extraFunctions.toast.show();
                     }
                     else if (userStatus.equals(" exist")) {
                         extraFunctions.hideProgressDialog();
@@ -208,9 +213,9 @@ public class signup extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<cust_sell_login> call, Response<cust_sell_login> response) {
                     userStatus = response.body().getUserStatus();
-                    if (userStatus.equals("account created")){
+                    if (userStatus.equals("verification email sent")){
                         extraFunctions.hideProgressDialog();
-                        extraFunctions.text.setText(getResources().getString(R.string.cr));
+                        extraFunctions.text.setText(getResources().getString(R.string.verifyemail) + email);
                         extraFunctions.toast.show();
 
                         et_username.getText().clear();
@@ -218,6 +223,11 @@ public class signup extends AppCompatActivity {
                         et_password.getText().clear();
                         et_contact.getText().clear();
                         et_address.getText().clear();
+                    }
+                    else if (userStatus.equals("verification email not sent")){
+                        extraFunctions.hideProgressDialog();
+                        extraFunctions.text.setText(getResources().getString(R.string.notverifyemail));
+                        extraFunctions.toast.show();
                     }
                     else if (userStatus.equals(" exist")) {
                         extraFunctions.hideProgressDialog();

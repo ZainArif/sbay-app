@@ -27,8 +27,8 @@
 
     <string name="iemail">"Invalid email address"</string>
     <string name="icontactno">"Invalid contact number"</string>
-    <string name="sr">"Seller registered"</string>
-    <string name="cr">"Customer registered"</string>
+    <string name="verifyemail">"Verification email sent to "</string>
+    <string name="notverifyemail">"Verification email not send. Please try again!</string>
     <string name="sww">"Something went wrong!"</string>
     <string name="ae">" already exist"</string>
 

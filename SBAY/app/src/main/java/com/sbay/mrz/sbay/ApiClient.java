@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
     public static String BASE_URL = "https://sbay-mrz.herokuapp.com/";
-    //public static String BASE_URL = "http://192.168.0.108:7000/";
+    //public static String BASE_URL = "http://192.168.1.107:7000/";
     public static Retrofit retrofit = null;
 
     public static Retrofit getApiClient(String mainRouteCall)

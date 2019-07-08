@@ -174,7 +174,6 @@ public class home extends AppCompatActivity {
                                 .replace(R.id.fragment_container, myProduct)
                                 .commit();
                         return true;
-
                     case R.id.nav_newSoftwareRequest:
                         menuItem.setChecked(true);
                         drawerLayout.closeDrawers();
@@ -192,7 +191,6 @@ public class home extends AppCompatActivity {
                         logOut();
                         drawerLayout.closeDrawers();
                         return false;
-
                     case R.id.nav_custlogout:
                         menuItem.setChecked(false);
                         logOut();

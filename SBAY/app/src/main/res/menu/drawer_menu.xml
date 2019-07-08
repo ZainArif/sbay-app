@@ -30,17 +30,17 @@
             android:title="@string/mysoftware">
         </item>
 
-        <item
-            android:id="@+id/nav_sellchat"
-            android:icon="@drawable/chat"
-            android:title="@string/chat">
-        </item>
+        <!--<item-->
+            <!--android:id="@+id/nav_sellchat"-->
+            <!--android:icon="@drawable/chat"-->
+            <!--android:title="@string/chat">-->
+        <!--</item>-->
 
-        <item
-            android:id="@+id/nav_sellnotification"
-            android:icon="@drawable/notification"
-            android:title="@string/notification">
-        </item>
+        <!--<item-->
+            <!--android:id="@+id/nav_sellnotification"-->
+            <!--android:icon="@drawable/notification"-->
+            <!--android:title="@string/notification">-->
+        <!--</item>-->
 
         <item
             android:id="@+id/nav_selllogout"
@@ -67,17 +67,17 @@
             android:title="@string/newsoftwarerequest">
         </item>
 
-        <item
-            android:id="@+id/nav_custchat"
-            android:icon="@drawable/chat"
-            android:title="@string/chat">
-        </item>
+        <!--<item-->
+            <!--android:id="@+id/nav_custchat"-->
+            <!--android:icon="@drawable/chat"-->
+            <!--android:title="@string/chat">-->
+        <!--</item>-->
 
-        <item
-            android:id="@+id/nav_custnotification"
-            android:icon="@drawable/notification"
-            android:title="@string/notification">
-        </item>
+        <!--<item-->
+            <!--android:id="@+id/nav_custnotification"-->
+            <!--android:icon="@drawable/notification"-->
+            <!--android:title="@string/notification">-->
+        <!--</item>-->
 
         <item
             android:id="@+id/nav_custlogout"

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -46,6 +47,8 @@ public class categoryProducts extends Fragment {
 
     private TextView tv_pCatType;
 
+    private ProgressBar progressBar;
+
     public categoryProducts() {
         // Required empty public constructor
     }
@@ -70,6 +73,7 @@ public class categoryProducts extends Fragment {
         customRecyclerAdapter1 = new customRecyclerAdapter1(softwareDetailsList,getContext());
         myRecyclerView.setLayoutManager(layoutManager);
         myRecyclerView.setAdapter(customRecyclerAdapter1);
+        progressBar = (ProgressBar)rootView.findViewById(R.id.progress_circular);
 
         return rootView;
     }
@@ -131,11 +135,13 @@ public class categoryProducts extends Fragment {
                     softwareDetailsList.add(new softwareDetails(productId,productName,productDesc,productCat,productCost,productDemoVideoUrl,productScreenshots,productHostUrl));
                     customRecyclerAdapter1.notifyDataSetChanged();
                 }
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<List<softwareDetails>> call, Throwable t) {
                 if (getActivity()!=null && isAdded()){
+                    progressBar.setVisibility(View.GONE);
                     extraFunctions.text.setText(getResources().getString(R.string.sww));
                     extraFunctions.toast.show();
                 }
