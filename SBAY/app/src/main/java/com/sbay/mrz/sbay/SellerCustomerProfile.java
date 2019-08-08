@@ -134,16 +134,22 @@ public class SellerCustomerProfile extends Fragment {
             updateUserCall.enqueue(new Callback<cust_sell_login>() {
                 @Override
                 public void onResponse(Call<cust_sell_login> call, Response<cust_sell_login> response) {
-                    String updateStatus = response.body().getUpdateStatus();
-                    if (updateStatus.equals("user updated")){
-                        extraFunctions.hideProgressDialog();
-                        extraFunctions.text.setText(getResources().getString(R.string.profileupdated));
-                        extraFunctions.toast.show();
-                        home.updateProfile(username,contact,address);
+                    if (response.code() == 200) {
+                        String updateStatus = response.body().getUpdateStatus();
+                        if (updateStatus.equals("user updated")) {
+                            extraFunctions.hideProgressDialog();
+                            extraFunctions.text.setText(getResources().getString(R.string.profileupdated));
+                            extraFunctions.toast.show();
+                            home.updateProfile(username, contact, address);
 
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .remove(SellerCustomerProfile.this).commit();
-                        getActivity().getSupportFragmentManager().popBackStack();
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .remove(SellerCustomerProfile.this).commit();
+                            getActivity().getSupportFragmentManager().popBackStack();
+                        } else {
+                            extraFunctions.hideProgressDialog();
+                            extraFunctions.text.setText(getResources().getString(R.string.sww));
+                            extraFunctions.toast.show();
+                        }
                     }
                     else {
                         extraFunctions.hideProgressDialog();
@@ -165,16 +171,22 @@ public class SellerCustomerProfile extends Fragment {
             updateUserCall.enqueue(new Callback<cust_sell_login>() {
                 @Override
                 public void onResponse(Call<cust_sell_login> call, Response<cust_sell_login> response) {
-                    String updateStatus = response.body().getUpdateStatus();
-                    if (updateStatus.equals("user updated")){
-                        extraFunctions.hideProgressDialog();
-                        extraFunctions.text.setText(getResources().getString(R.string.profileupdated));
-                        extraFunctions.toast.show();
-                        home.updateProfile(username,contact,address);
+                    if (response.code() == 200) {
+                        String updateStatus = response.body().getUpdateStatus();
+                        if (updateStatus.equals("user updated")) {
+                            extraFunctions.hideProgressDialog();
+                            extraFunctions.text.setText(getResources().getString(R.string.profileupdated));
+                            extraFunctions.toast.show();
+                            home.updateProfile(username, contact, address);
 
-                        getActivity().getSupportFragmentManager().beginTransaction()
-                                .remove(SellerCustomerProfile.this).commit();
-                        getActivity().getSupportFragmentManager().popBackStack();
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .remove(SellerCustomerProfile.this).commit();
+                            getActivity().getSupportFragmentManager().popBackStack();
+                        } else {
+                            extraFunctions.hideProgressDialog();
+                            extraFunctions.text.setText(getResources().getString(R.string.sww));
+                            extraFunctions.toast.show();
+                        }
                     }
                     else {
                         extraFunctions.hideProgressDialog();

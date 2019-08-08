@@ -96,7 +96,7 @@
                 android:id="@+id/et_productExeurl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/exeurl"
+                android:hint="@string/scurl"
                 android:background="@drawable/border"
                 android:layout_marginTop="15dp"
                 android:padding="4dp"

@@ -69,8 +69,4 @@ public class extraFunctions {
         mProgressDialog.dismiss();
     }
 
-
-
-
-
 }

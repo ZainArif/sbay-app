@@ -119,14 +119,21 @@ public class customizationRequest extends Fragment {
         productCustomizationCall.enqueue(new Callback<com.sbay.mrz.sbay.productCustomization>() {
             @Override
             public void onResponse(Call<com.sbay.mrz.sbay.productCustomization> call, Response<com.sbay.mrz.sbay.productCustomization> response) {
-                if (response.body().getCustId().equals(cust_id)){
+                if (response.code() == 200) {
+                    if (response.body().getCustId().equals(cust_id)) {
+                        extraFunctions.hideProgressDialog();
+                        extraFunctions.text.setText(getResources().getString(R.string.custreqsent));
+                        extraFunctions.toast.show();
+                        pDesc.getText().clear();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .remove(customizationRequest.this).commit();
+                        getActivity().getSupportFragmentManager().popBackStack();
+                    }
+                }
+                else {
                     extraFunctions.hideProgressDialog();
-                    extraFunctions.text.setText(getResources().getString(R.string.custreqsent));
+                    extraFunctions.text.setText(getResources().getString(R.string.sww));
                     extraFunctions.toast.show();
-                    pDesc.getText().clear();
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .remove(customizationRequest.this).commit();
-                    getActivity().getSupportFragmentManager().popBackStack();
                 }
             }
 

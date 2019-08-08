@@ -9,10 +9,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -243,6 +246,20 @@ public class updateProduct extends Fragment {
             @Override
             public void onClick(View v) {
 
+                extraFunctions.closeKeyboard(getActivity(), getContext());
+
+                pName = et_productName.getText().toString();
+                pDesc = et_productDesc.getText().toString();
+                pCost = et_productCost.getText().toString();
+                pExeUrl = et_productExeUrl.getText().toString();
+                pDemoUrl = et_productDemoUrl.getText().toString();
+                pHostUrl = et_productHostUrl.getText().toString();
+                pCat = sp_productCat.getSelectedItem().toString();
+
+                if (!validation()) {
+                    return;
+                }
+
                 alertDialog.setTitle("Confirmation");
                 alertDialog.setMessage("Are you sure you want to update this information?");
 
@@ -253,15 +270,8 @@ public class updateProduct extends Fragment {
 
                         dialog.dismiss();
 
-                        extraFunctions.closeKeyboard(getActivity(), getContext());
-
-                        pName = et_productName.getText().toString();
-                        pDesc = et_productDesc.getText().toString();
-                        pCost = et_productCost.getText().toString();
-                        pExeUrl = et_productExeUrl.getText().toString();
-                        pDemoUrl = et_productDemoUrl.getText().toString();
-                        pHostUrl = et_productHostUrl.getText().toString();
-                        pCat = sp_productCat.getSelectedItem().toString();
+                        if (pHostUrl.isEmpty())
+                            pHostUrl = getResources().getString(R.string.notavailable);
 
                         if (isImageSelect){
                             if (!isImageUpload) {
@@ -289,6 +299,70 @@ public class updateProduct extends Fragment {
         return rootView;
     }
 
+    private boolean validation() {
+        boolean valid = true;
+
+        if (TextUtils.isEmpty(pName)) {
+            et_productName.setError("required");
+            valid = false;
+        }
+
+        if (TextUtils.isEmpty(pDesc)) {
+            et_productDesc.setError("required");
+            valid = false;
+        }
+
+        if (TextUtils.isEmpty(pCost)) {
+            et_productCost.setError("required");
+            valid = false;
+        }
+
+        if (TextUtils.isEmpty(pExeUrl)){
+            et_productExeUrl.setError("required");
+            valid = false;
+            et_productExeUrl.setEnabled(true);
+        }
+        else if (!(URLUtil.isHttpsUrl(pExeUrl) || URLUtil.isHttpUrl(pExeUrl))){
+            et_productExeUrl.setError(getResources().getString(R.string.vurl));
+            valid = false;
+            et_productExeUrl.setEnabled(true);
+        }
+        else if (!Patterns.WEB_URL.matcher(pExeUrl).matches()){
+            et_productExeUrl.setError("invalid url");
+            valid = false;
+            et_productExeUrl.setEnabled(true);
+        }
+
+        if (TextUtils.isEmpty(pDemoUrl)){
+            et_productDemoUrl.setError("required");
+            valid = false;
+            et_productDemoUrl.setEnabled(true);
+        }
+        else if (!( (URLUtil.isHttpsUrl(pDemoUrl) || URLUtil.isHttpUrl(pDemoUrl)))){
+            et_productDemoUrl.setError(getResources().getString(R.string.vurl));
+            valid = false;
+            et_productDemoUrl.setEnabled(true);
+        }
+        else if (!Patterns.WEB_URL.matcher(pDemoUrl).matches()){
+            et_productDemoUrl.setError("invalid url");
+            valid = false;
+            et_productDemoUrl.setEnabled(true);
+        }
+
+        if (!TextUtils.isEmpty(pHostUrl)){
+            if (!( (URLUtil.isHttpsUrl(pHostUrl) || URLUtil.isHttpUrl(pHostUrl)))){
+                et_productHostUrl.setError(getResources().getString(R.string.vurl));
+                valid = false;
+            }
+            else if (!Patterns.WEB_URL.matcher(pHostUrl).matches()){
+                et_productHostUrl.setError("invalid url");
+                valid = false;
+            }
+        }
+
+        return valid;
+    }
+
     private void update_product() {
 
         softwareDetails = new softwareDetails(sellerId, pName, pDesc, pExeUrl, pDemoUrl, pHostUrl, pCost, pCat, pScreenshot,pScreenshotPublicId);
@@ -297,12 +371,13 @@ public class updateProduct extends Fragment {
         updateProductSoftwareCall.enqueue(new Callback<com.sbay.mrz.sbay.softwareDetails>() {
             @Override
             public void onResponse(Call<com.sbay.mrz.sbay.softwareDetails> call, Response<com.sbay.mrz.sbay.softwareDetails> response) {
-                String updateStatus = response.body().getUpdatestatus();
-                if (updateStatus.equals("updated")) {
+                if (response.code() == 200) {
+                    String updateStatus = response.body().getUpdatestatus();
+                    if (updateStatus.equals("updated")) {
 
-                    extraFunctions.hideProgressDialog();
-                    extraFunctions.text.setText(getResources().getString(R.string.pupdated));
-                    extraFunctions.toast.show();
+                        extraFunctions.hideProgressDialog();
+                        extraFunctions.text.setText(getResources().getString(R.string.pupdated));
+                        extraFunctions.toast.show();
 
 //                    bundle = new Bundle();
 //                    bundle.putString("seller_cust_id",sellerId);
@@ -312,9 +387,9 @@ public class updateProduct extends Fragment {
 //                            .replace(R.id.fragment_container, myProduct)
 //                            .commit();
 
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .remove(updateProduct.this).commit();
-                    getActivity().getSupportFragmentManager().popBackStack();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .remove(updateProduct.this).commit();
+                        getActivity().getSupportFragmentManager().popBackStack();
 //                    extraFunctions.toast.show();
 //                    et_productName.getText().clear();
 //                    et_productDesc.getText().clear();
@@ -325,6 +400,11 @@ public class updateProduct extends Fragment {
 //                    img_screenshot.setVisibility(View.GONE);
 //                    btn_updateProduct.setVisibility(View.GONE);
 //                    isImageUpload = false;
+                    } else {
+                        extraFunctions.hideProgressDialog();
+                        extraFunctions.text.setText(getResources().getString(R.string.sww));
+                        extraFunctions.toast.show();
+                    }
                 }
                 else {
                     extraFunctions.hideProgressDialog();

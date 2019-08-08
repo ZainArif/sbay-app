@@ -109,14 +109,21 @@ public class newSoftwareRequest extends Fragment {
         newProductCall.enqueue(new Callback<newProduct>() {
             @Override
             public void onResponse(Call<newProduct> call, Response<newProduct> response) {
-                if (response.body().getCustId().equals(cust_id)){
-                    extraFunctions.hideProgressDialog();
-                    extraFunctions.text.setText(getResources().getString(R.string.newreqsent));
-                    extraFunctions.toast.show();
-                    pDesc.getText().clear();
+                if (response.code() == 200) {
+                    if (response.body().getCustId().equals(cust_id)) {
+                        extraFunctions.hideProgressDialog();
+                        extraFunctions.text.setText(getResources().getString(R.string.newreqsent));
+                        extraFunctions.toast.show();
+                        pDesc.getText().clear();
 //                    getActivity().getSupportFragmentManager().beginTransaction()
 //                            .remove(customizationRequest.this).commit();
 //                    getActivity().getSupportFragmentManager().popBackStack();
+                    }
+                }
+                else {
+                    extraFunctions.hideProgressDialog();
+                    extraFunctions.text.setText(getResources().getString(R.string.sww));
+                    extraFunctions.toast.show();
                 }
             }
 

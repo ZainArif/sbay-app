@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SBAY</string>
+    <string name="app_name">Sbay</string>
 
     <string name="wts">"Welcome To SBAY"</string>
     <string name="ff">"Fill out the form to get started"</string>
@@ -21,6 +21,7 @@
     <string name="spre">"Send Password Reset Email"</string>
     <string name="emailnotfound">"Email not found"</string>
     <string name="resetemailsent">"Password reset email sent to "</string>
+    <string name="resetemailnotsent">"Password reset email not send. Please try again!"</string>
 
     <string name="cust">"Customer"</string>
     <string name="seller">"Seller"</string>
@@ -86,7 +87,7 @@
         <item>IOT</item>
     </string-array>
 
-    <string name="exeurl">"Exe Url"</string>
+    <string name="scurl">"Source code Url"</string>
     <string name="hosturl">"Host Url"</string>
     <string name="demovideourl">"Demo Url"</string>
     <string name="uploadimage">"Upload Feature Image"</string>
@@ -94,6 +95,7 @@
     <string name="psaved">"Product Saved"</string>
     <string name="selectImage">"Please Upload Image"</string>
     <string name="imgError">"Image Could Not Upload\nPlease Try Again"</string>
+    <string name="vurl">"Url must contain http or https\ne.g. https://www.google.com"</string>
 
     <string name="allsoftwares">"All Softwares</string>
     <string name="addsoftware">"Add Software</string>
@@ -123,4 +125,5 @@
     
     <string name="login_preference">"com.sbay.mrz.sbay_login_preference"</string>
     <string name="login_status_preference">"com.sbay.mrz.sbay_login_status_preference"</string>
+    <string name="npa">"No product available"</string>
 </resources>

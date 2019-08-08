@@ -91,23 +91,37 @@ public class myProduct extends Fragment {
         mySoftwaresList.enqueue(new Callback<List<softwareDetails>>() {
             @Override
             public void onResponse(Call<List<softwareDetails>> call, Response<List<softwareDetails>> response) {
-                softwareDetailsList.clear();
-                for (int index=0;index<response.body().size();index++){
-                    pId = response.body().get(index).getProductID();
-                    sellerId = response.body().get(index).getSellerID();
-                    pNmae = response.body().get(index).getName();
-                    pDesc = response.body().get(index).getDescription();
-                    pExeUrl = response.body().get(index).getExeURl();
-                    pDemoUrl = response.body().get(index).getDemoVideoURl();
-                    pHostUrl = response.body().get(index).getHostURL();
-                    pCost = response.body().get(index).getCost();
-                    pCat = response.body().get(index).getCategory();
-                    pScreenshot = response.body().get(index).getScreenShot();
-                    pScreenshotPublicId =  response.body().get(index).getScreenshotPublicID();
-                    softwareDetailsList.add(new softwareDetails(pId,sellerId,pNmae,pDesc,pExeUrl,pDemoUrl,pHostUrl,pCost,pCat,pScreenshot,pScreenshotPublicId));
-                    myProductRecycleradapter.notifyDataSetChanged();
+                if (response.code() == 200) {
+                    if (response.body().size()==0){
+                        progressBar.setVisibility(View.GONE);
+                        extraFunctions.text.setText(getResources().getString(R.string.npa));
+                        extraFunctions.toast.show();
+                    }
+                    else {
+                        softwareDetailsList.clear();
+                        for (int index = 0; index < response.body().size(); index++) {
+                            pId = response.body().get(index).getProductID();
+                            sellerId = response.body().get(index).getSellerID();
+                            pNmae = response.body().get(index).getName();
+                            pDesc = response.body().get(index).getDescription();
+                            pExeUrl = response.body().get(index).getExeURl();
+                            pDemoUrl = response.body().get(index).getDemoVideoURl();
+                            pHostUrl = response.body().get(index).getHostURL();
+                            pCost = response.body().get(index).getCost();
+                            pCat = response.body().get(index).getCategory();
+                            pScreenshot = response.body().get(index).getScreenShot();
+                            pScreenshotPublicId = response.body().get(index).getScreenshotPublicID();
+                            softwareDetailsList.add(new softwareDetails(pId, sellerId, pNmae, pDesc, pExeUrl, pDemoUrl, pHostUrl, pCost, pCat, pScreenshot, pScreenshotPublicId));
+                            myProductRecycleradapter.notifyDataSetChanged();
+                        }
+                        progressBar.setVisibility(View.GONE);
+                    }
                 }
-                progressBar.setVisibility(View.GONE);
+                else {
+                    progressBar.setVisibility(View.GONE);
+                    extraFunctions.text.setText(getResources().getString(R.string.sww));
+                    extraFunctions.toast.show();
+                }
             }
 
             @Override

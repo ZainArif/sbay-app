@@ -150,28 +150,34 @@ public class login extends AppCompatActivity {
             custSellLoginCall.enqueue(new Callback<cust_sell_login>() {
                 @Override
                 public void onResponse(Call<cust_sell_login> call, Response<cust_sell_login> response) {
-                    userStatus = response.body().getUserStatus();
-                    if (userStatus.equals(" exist")){
-                        extraFunctions.hideProgressDialog();
-                        name = response.body().getCustSellRegistration().getName();
-                        contact = String.valueOf( response.body().getCustSellRegistration().getContact() );
-                        address = response.body().getCustSellRegistration().getAddress();
-                        seller_cust_id = response.body().getCustSellRegistration().getId();
-                        loginStatus = true;
-                        Intent main_Activity = new Intent();
-                        main_Activity.putExtra("seller_cust_id",seller_cust_id);
-                        main_Activity.putExtra("username",name);
-                        main_Activity.putExtra("email",email);
-                        main_Activity.putExtra("menu type",getResources().getString(R.string.seller));
-                        main_Activity.putExtra("contact",contact);
-                        main_Activity.putExtra("address",address);
-                        setResult(RESULT_OK,main_Activity);
-                        finish();
-                        mySharedPreference.writeLoginInfo(seller_cust_id,name,email,contact,address,"Seller",loginStatus);
+                    if (response.code() == 200) {
+                        userStatus = response.body().getUserStatus();
+                        if (userStatus.equals(" exist")) {
+                            extraFunctions.hideProgressDialog();
+                            name = response.body().getCustSellRegistration().getName();
+                            contact = String.valueOf(response.body().getCustSellRegistration().getContact());
+                            address = response.body().getCustSellRegistration().getAddress();
+                            seller_cust_id = response.body().getCustSellRegistration().getId();
+                            loginStatus = true;
+                            Intent main_Activity = new Intent();
+                            main_Activity.putExtra("seller_cust_id", seller_cust_id);
+                            main_Activity.putExtra("username", name);
+                            main_Activity.putExtra("email", email);
+                            main_Activity.putExtra("menu type", getResources().getString(R.string.seller));
+                            main_Activity.putExtra("contact", contact);
+                            main_Activity.putExtra("address", address);
+                            setResult(RESULT_OK, main_Activity);
+                            finish();
+                            mySharedPreference.writeLoginInfo(seller_cust_id, name, email, contact, address, "Seller", loginStatus);
+                        } else if (userStatus.equals(" not exist")) {
+                            extraFunctions.hideProgressDialog();
+                            extraFunctions.text.setText(getResources().getString(R.string.seller) + userStatus);
+                            extraFunctions.toast.show();
+                        }
                     }
-                    else if (userStatus.equals(" not exist")){
+                    else {
                         extraFunctions.hideProgressDialog();
-                        extraFunctions.text.setText(getResources().getString(R.string.seller)+ userStatus);
+                        extraFunctions.text.setText(getResources().getString(R.string.sww));
                         extraFunctions.toast.show();
                     }
                 }
@@ -190,28 +196,34 @@ public class login extends AppCompatActivity {
             custSellLoginCall.enqueue(new Callback<cust_sell_login>() {
                 @Override
                 public void onResponse(Call<cust_sell_login> call, Response<cust_sell_login> response) {
-                    userStatus = response.body().getUserStatus();
-                    if (userStatus.equals(" exist")){
-                        extraFunctions.hideProgressDialog();
-                        name = response.body().getCustSellRegistration().getName();
-                        contact = String.valueOf( response.body().getCustSellRegistration().getContact() );
-                        address = response.body().getCustSellRegistration().getAddress();
-                        seller_cust_id = response.body().getCustSellRegistration().getId();
-                        loginStatus = true;
-                        Intent main_activity = new Intent();
-                        main_activity.putExtra("seller_cust_id",seller_cust_id);
-                        main_activity.putExtra("username",name);
-                        main_activity.putExtra("email",email);
-                        main_activity.putExtra("menu type",getResources().getString(R.string.cust));
-                        main_activity.putExtra("contact",contact);
-                        main_activity.putExtra("address",address);
-                        setResult(RESULT_OK,main_activity);
-                        finish();
-                        mySharedPreference.writeLoginInfo(seller_cust_id,name,email,contact,address,"Customer",loginStatus);
+                    if (response.code() == 200) {
+                        userStatus = response.body().getUserStatus();
+                        if (userStatus.equals(" exist")) {
+                            extraFunctions.hideProgressDialog();
+                            name = response.body().getCustSellRegistration().getName();
+                            contact = String.valueOf(response.body().getCustSellRegistration().getContact());
+                            address = response.body().getCustSellRegistration().getAddress();
+                            seller_cust_id = response.body().getCustSellRegistration().getId();
+                            loginStatus = true;
+                            Intent main_activity = new Intent();
+                            main_activity.putExtra("seller_cust_id", seller_cust_id);
+                            main_activity.putExtra("username", name);
+                            main_activity.putExtra("email", email);
+                            main_activity.putExtra("menu type", getResources().getString(R.string.cust));
+                            main_activity.putExtra("contact", contact);
+                            main_activity.putExtra("address", address);
+                            setResult(RESULT_OK, main_activity);
+                            finish();
+                            mySharedPreference.writeLoginInfo(seller_cust_id, name, email, contact, address, "Customer", loginStatus);
+                        } else if (userStatus.equals(" not exist")) {
+                            extraFunctions.hideProgressDialog();
+                            extraFunctions.text.setText(getResources().getString(R.string.cust) + userStatus);
+                            extraFunctions.toast.show();
+                        }
                     }
-                    else if (userStatus.equals(" not exist")){
+                    else {
                         extraFunctions.hideProgressDialog();
-                        extraFunctions.text.setText(getResources().getString(R.string.cust)+ userStatus);
+                        extraFunctions.text.setText(getResources().getString(R.string.sww));
                         extraFunctions.toast.show();
                     }
                 }

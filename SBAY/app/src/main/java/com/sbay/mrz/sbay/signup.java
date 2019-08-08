@@ -172,30 +172,34 @@ public class signup extends AppCompatActivity {
             cust_sell_registrationCall.enqueue(new Callback<cust_sell_login>() {
                 @Override
                 public void onResponse(Call<cust_sell_login> call, Response<cust_sell_login> response) {
-                    userStatus = response.body().getUserStatus();
-                    if (userStatus.equals("verification email sent")){
-                        extraFunctions.hideProgressDialog();
-                        extraFunctions.text.setText(getResources().getString(R.string.verifyemail) + email);
-                        extraFunctions.toast.show();
+                    if (response.code() == 200) {
+                        userStatus = response.body().getUserStatus();
+                        if (userStatus.equals("verification email sent")) {
+                            extraFunctions.hideProgressDialog();
+                            extraFunctions.text.setText(getResources().getString(R.string.verifyemail) + email);
+                            extraFunctions.toast.show();
 
-                        et_username.getText().clear();
-                        et_email.getText().clear();
-                        et_password.getText().clear();
-                        et_contact.getText().clear();
-                        et_address.getText().clear();
+                            et_username.getText().clear();
+                            et_email.getText().clear();
+                            et_password.getText().clear();
+                            et_contact.getText().clear();
+                            et_address.getText().clear();
 
+                        } else if (userStatus.equals("verification email not sent")) {
+                            extraFunctions.hideProgressDialog();
+                            extraFunctions.text.setText(getResources().getString(R.string.notverifyemail));
+                            extraFunctions.toast.show();
+                        } else if (userStatus.equals(" exist")) {
+                            extraFunctions.hideProgressDialog();
+                            extraFunctions.text.setText(getResources().getString(R.string.seller) + getResources().getString(R.string.ae));
+                            extraFunctions.toast.show();
+                        }
                     }
-                    else if (userStatus.equals("verification email not sent")){
+                    else {
                         extraFunctions.hideProgressDialog();
-                        extraFunctions.text.setText(getResources().getString(R.string.notverifyemail));
+                        extraFunctions.text.setText(getResources().getString(R.string.sww));
                         extraFunctions.toast.show();
                     }
-                    else if (userStatus.equals(" exist")) {
-                        extraFunctions.hideProgressDialog();
-                        extraFunctions.text.setText(getResources().getString(R.string.seller) + getResources().getString(R.string.ae));
-                        extraFunctions.toast.show();
-                    }
-
                 }
 
                 @Override
@@ -212,29 +216,33 @@ public class signup extends AppCompatActivity {
             cust_sell_registrationCall.enqueue(new Callback<cust_sell_login>() {
                 @Override
                 public void onResponse(Call<cust_sell_login> call, Response<cust_sell_login> response) {
-                    userStatus = response.body().getUserStatus();
-                    if (userStatus.equals("verification email sent")){
-                        extraFunctions.hideProgressDialog();
-                        extraFunctions.text.setText(getResources().getString(R.string.verifyemail) + email);
-                        extraFunctions.toast.show();
+                    if (response.code() == 200) {
+                        userStatus = response.body().getUserStatus();
+                        if (userStatus.equals("verification email sent")) {
+                            extraFunctions.hideProgressDialog();
+                            extraFunctions.text.setText(getResources().getString(R.string.verifyemail) + email);
+                            extraFunctions.toast.show();
 
-                        et_username.getText().clear();
-                        et_email.getText().clear();
-                        et_password.getText().clear();
-                        et_contact.getText().clear();
-                        et_address.getText().clear();
+                            et_username.getText().clear();
+                            et_email.getText().clear();
+                            et_password.getText().clear();
+                            et_contact.getText().clear();
+                            et_address.getText().clear();
+                        } else if (userStatus.equals("verification email not sent")) {
+                            extraFunctions.hideProgressDialog();
+                            extraFunctions.text.setText(getResources().getString(R.string.notverifyemail));
+                            extraFunctions.toast.show();
+                        } else if (userStatus.equals(" exist")) {
+                            extraFunctions.hideProgressDialog();
+                            extraFunctions.text.setText(getResources().getString(R.string.cust) + getResources().getString(R.string.ae));
+                            extraFunctions.toast.show();
+                        }
                     }
-                    else if (userStatus.equals("verification email not sent")){
+                    else {
                         extraFunctions.hideProgressDialog();
-                        extraFunctions.text.setText(getResources().getString(R.string.notverifyemail));
+                        extraFunctions.text.setText(getResources().getString(R.string.sww));
                         extraFunctions.toast.show();
                     }
-                    else if (userStatus.equals(" exist")) {
-                        extraFunctions.hideProgressDialog();
-                        extraFunctions.text.setText(getResources().getString(R.string.cust) + getResources().getString(R.string.ae));
-                        extraFunctions.toast.show();
-                    }
-
                 }
 
                 @Override

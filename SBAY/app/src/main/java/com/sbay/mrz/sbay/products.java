@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,6 +166,7 @@ public class products extends Fragment {
             }
         });
 
+        //getSoftwares();
         return rootView;
     }
 
@@ -176,27 +178,32 @@ public class products extends Fragment {
 
     private void getSoftwares(){
 
-
         Call<List<softwareDetails>> softwareDetalisListCall = apiInterface.allSoftwares();
         softwareDetalisListCall.enqueue(new Callback<List<softwareDetails>>() {
             @Override
             public void onResponse(Call<List<softwareDetails>> call, Response<List<softwareDetails>> response) {
-                softwareDetailsList.clear();
+                if (response.code() == 200) {
+                    softwareDetailsList.clear();
 
-                for (int index=0;index<response.body().size();index++)
-                {
-                    productId = response.body().get(index).getProductID();
-                    productCat = response.body().get(index).getCategory();
-                    productName = response.body().get(index).getName();
-                    productDesc = response.body().get(index).getDescription();
-                    productCost = response.body().get(index).getCost();
-                    productDemoVideoUrl = response.body().get(index).getDemoVideoURl();
-                    productScreenshots = response.body().get(index).getScreenShot();
-                    productHostUrl = response.body().get(index).getHostURL();
-                    softwareDetailsList.add(new softwareDetails(productId,productName,productDesc,productCat,productCost,productDemoVideoUrl,productScreenshots,productHostUrl));
-                    customRecyclerAdapter.notifyDataSetChanged();
+                    for (int index = 0; index < response.body().size(); index++) {
+                        productId = response.body().get(index).getProductID();
+                        productCat = response.body().get(index).getCategory();
+                        productName = response.body().get(index).getName();
+                        productDesc = response.body().get(index).getDescription();
+                        productCost = response.body().get(index).getCost();
+                        productDemoVideoUrl = response.body().get(index).getDemoVideoURl();
+                        productScreenshots = response.body().get(index).getScreenShot();
+                        productHostUrl = response.body().get(index).getHostURL();
+                        softwareDetailsList.add(new softwareDetails(productId, productName, productDesc, productCat, productCost, productDemoVideoUrl, productScreenshots, productHostUrl));
+                        customRecyclerAdapter.notifyDataSetChanged();
+                    }
+                    progressBar.setVisibility(View.GONE);
                 }
-                progressBar.setVisibility(View.GONE);
+                else {
+                    progressBar.setVisibility(View.GONE);
+                    extraFunctions.text.setText(getResources().getString(R.string.sww));
+                    extraFunctions.toast.show();
+                }
             }
 
             @Override

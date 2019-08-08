@@ -81,17 +81,28 @@ public class ForgotPassword extends AppCompatActivity {
         passwordResetCall.enqueue(new Callback<PasswordResetResponse>() {
             @Override
             public void onResponse(Call<PasswordResetResponse> call, Response<PasswordResetResponse> response) {
-                resStatus = response.body().getResponseStatus();
-                if (resStatus.equals("email not in db")){
-                    extraFunctions.hideProgressDialog();
-                    extraFunctions.text.setText(getResources().getString(R.string.emailnotfound));
-                    extraFunctions.toast.show();
+                if (response.code() == 200) {
+                    resStatus = response.body().getResponseStatus();
+                    if (resStatus.equals("email not in db")) {
+                        extraFunctions.hideProgressDialog();
+                        extraFunctions.text.setText(getResources().getString(R.string.emailnotfound));
+                        extraFunctions.toast.show();
+                    } else if (resStatus.equals("recovery email sent")) {
+                        extraFunctions.hideProgressDialog();
+                        extraFunctions.text.setText(getResources().getString(R.string.resetemailsent) + email);
+                        extraFunctions.toast.show();
+                        finish();
+                    }
+                    else if (resStatus.equals("recovery email not sent")) {
+                        extraFunctions.hideProgressDialog();
+                        extraFunctions.text.setText(getResources().getString(R.string.resetemailnotsent));
+                        extraFunctions.toast.show();
+                    }
                 }
-                else if (resStatus.equals("recovery email sent")){
+                else {
                     extraFunctions.hideProgressDialog();
-                    extraFunctions.text.setText(getResources().getString(R.string.resetemailsent) + email);
+                    extraFunctions.text.setText(getResources().getString(R.string.sww));
                     extraFunctions.toast.show();
-                    finish();
                 }
             }
 

@@ -13,9 +13,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -158,11 +160,11 @@ public class addProduct extends Fragment {
 
                         dialog.dismiss();
 
-                        if (pExeUrl.isEmpty())
-                            pExeUrl = getResources().getString(R.string.notavailable);
-
-                        if (pDemoUrl.isEmpty())
-                            pDemoUrl = getResources().getString(R.string.notavailable);
+//                        if (pExeUrl.isEmpty())
+//                            pExeUrl = getResources().getString(R.string.notavailable);
+//
+//                        if (pDemoUrl.isEmpty())
+//                            pDemoUrl = getResources().getString(R.string.notavailable);
 
                         if (pHostUrl.isEmpty())
                             pHostUrl = getResources().getString(R.string.notavailable);
@@ -213,6 +215,43 @@ public class addProduct extends Fragment {
             valid = false;
         }
 
+        if (TextUtils.isEmpty(pExeUrl)){
+            et_productExeUrl.setError("required");
+            valid = false;
+        }
+        else if (!(URLUtil.isHttpsUrl(pExeUrl) || URLUtil.isHttpUrl(pExeUrl))){
+            et_productExeUrl.setError(getResources().getString(R.string.vurl));
+            valid = false;
+        }
+        else if (!Patterns.WEB_URL.matcher(pExeUrl).matches()){
+            et_productExeUrl.setError("invalid url");
+            valid = false;
+        }
+
+        if (TextUtils.isEmpty(pDemoUrl)){
+            et_productDemoUrl.setError("required");
+            valid = false;
+        }
+        else if (!( (URLUtil.isHttpsUrl(pDemoUrl) || URLUtil.isHttpUrl(pDemoUrl)))){
+            et_productDemoUrl.setError(getResources().getString(R.string.vurl));
+            valid = false;
+        }
+        else if (!Patterns.WEB_URL.matcher(pDemoUrl).matches()){
+            et_productDemoUrl.setError("invalid url");
+            valid = false;
+        }
+
+        if (!TextUtils.isEmpty(pHostUrl)){
+            if (!( (URLUtil.isHttpsUrl(pHostUrl) || URLUtil.isHttpUrl(pHostUrl)))){
+                et_productHostUrl.setError(getResources().getString(R.string.vurl));
+                valid = false;
+            }
+            else if (!Patterns.WEB_URL.matcher(pHostUrl).matches()){
+                et_productHostUrl.setError("invalid url");
+                valid = false;
+            }
+        }
+
         return valid;
     }
 
@@ -224,7 +263,7 @@ public class addProduct extends Fragment {
         addSoftwareCall.enqueue(new Callback<com.sbay.mrz.sbay.softwareDetails>() {
             @Override
             public void onResponse(Call<com.sbay.mrz.sbay.softwareDetails> call, Response<com.sbay.mrz.sbay.softwareDetails> response) {
-                if (response.isSuccessful()) {
+                if (response.code()==200) {
                     extraFunctions.hideProgressDialog();
                     extraFunctions.text.setText(getResources().getString(R.string.psaved));
                     extraFunctions.toast.show();

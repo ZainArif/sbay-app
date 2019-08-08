@@ -20,7 +20,7 @@
             android:resource="@array/preloaded_fonts" />
         <meta-data
             android:name="CLOUDINARY_URL"
-            android:value="cloudinary://688479612667948:MIBtC1LlfdbeQPVB8DtCfgorFw8@chohan" />
+            android:value="cloudinary://765813151784165:6FgooBj46S-xP799zGbFkpDaIl8@djza2z6yc" />
 
         <activity android:name=".MainActivity" />
         <activity android:name=".signup" />
